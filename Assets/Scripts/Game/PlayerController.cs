@@ -1,50 +1,48 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using UnityEngine.SceneManagement;
+
 
 
 public class PlayerController : MonoBehaviour
 {
-    //Parameters for moving
+    // Parameters for moving
+    private int health = 3;
+    private int score = 0;
     private Rigidbody rb;
     private bool doJump = false;
     private bool movable = true;
+    private bool invulnerable = false;
+    private List<Transform> pickUpsList = new List<Transform>();
+    private int backCount = 0;
     public bool jumpable;
     public float verticalSpeed;
     public float horizontalSpeed;
     public float jumpForceMagnitude;
-
-    //Parameters to update scores
-    private int score = 0;
-    private List<Transform> pickUpsList = new List<Transform>();
-    public TextMeshProUGUI scoreText;
     public GameObject pickUps;
 
-    //Parameters to adjust health
-    private int health = 3;
-    public TextMeshProUGUI livesText;
-    private bool invulnerable = false;
-
-    //Parameters to show alert
-    public TextMeshProUGUI alertText;
+    private void OnEnable()
+    {
+        EventsManager.OnLoadNewLvl += LoadNextLvl;
+        EventsManager.OnResetLvl += Reset;
+    }
+    private void OnDisable()
+    {
+        EventsManager.OnLoadNewLvl -= LoadNextLvl;
+        EventsManager.OnResetLvl -= Reset;
+    }
 
     // Use this for initialization
     void Start()
     {
-        Time.timeScale = 1;
-        alertText.GetComponent<CanvasRenderer>().SetAlpha(0);
-
         rb = this.GetComponent<Rigidbody>();
-
         //Get pick up objects list
-        for(int i = 0; i < pickUps.transform.childCount; i++)
+        for (int i = 0; i < pickUps.transform.childCount; i++)
         {
             pickUpsList.Add(pickUps.transform.GetChild(i));
         }
     }
-
 
     private void Update()
     {
@@ -52,8 +50,16 @@ public class PlayerController : MonoBehaviour
         {
             doJump = true;
         }
+        if (Input.GetKey(KeyCode.Escape) && Application.isMobilePlatform)
+        {
+            backCount++;
+            StartCoroutine(FlagBack());
+            if (backCount > 1)
+            {
+                StartCoroutine(LoadBack());
+            }
+        }
     }
-
 
     private void FixedUpdate()
     {
@@ -73,40 +79,51 @@ public class PlayerController : MonoBehaviour
                 rb.AddForce(Vector3.up * jumpForceMagnitude, ForceMode.Impulse);
                 doJump = false;
             }
-
-            //Test
+            // Test
             float xVelocity = horizontalInput * horizontalSpeed;
             float yVelocity = rb.velocity.y;
             float zVelocity = verticalInput * verticalSpeed;
             rb.velocity = new Vector3(xVelocity, yVelocity, zVelocity);
 
-            //End Test
+            // End Test
 
         }
-
     }
-
 
     private void OnTriggerEnter(Collider other)
     {
-        
-        //Detect diamonds collecting
-        if(other.gameObject.CompareTag("Diamond"))
+        // Detect diamonds collecting
+        if(other.CompareTag("Diamond"))
         {
-            EventsManager.RaiseOnPickUp(other);
-
-            //Wait to be handled later
-            //other.gameObject.SetActive(false);
-            //IncreaseScore();
+            EventsManager.RaiseOnPickUp(other, ++this.score);
+            if (this.score == pickUpsList.Count)
+            {
+                Pause();
+                EventsManager.RaiseOnEndGame(true);
+            }
         }
 
-        //Detect obstacles touched
-        if(other.transform.CompareTag("Enemy") && !invulnerable)
+        // Detect obstacles touched
+        if(other.CompareTag("Enemy") && !invulnerable)
         {
-            LoseOneLife();
+            Debug.Log("Touched enemy");
+            this.health--;
+            if (IsDead())
+            {
+                Debug.Log("Dead");
+                Pause();
+                EventsManager.RaiseOnEndGame(false);
+            }
+            else
+            {
+                Debug.Log("Lose 1 life");
+                EventsManager.RaiseLoseOneLife(health);
+                Renderer renderer = this.GetComponent<Renderer>();
+                StartCoroutine(Flicker(renderer, 0.8f, 0.15f));
+            }
+
         }
     }
-
 
     private bool IsGrounded()
     {
@@ -114,67 +131,18 @@ public class PlayerController : MonoBehaviour
         return Physics.Raycast(playerCollider.bounds.center, Vector3.down, playerCollider.bounds.extents.y + 0.1f);
     }
 
-    private void IncreaseScore()
+    private bool IsDead()
     {
-        this.score++;
-        scoreText.text = score + "/" + pickUpsList.Count;
-        StartCoroutine(Flicker(scoreText.GetComponent<CanvasRenderer>(),1f, 0.2f, false, false));
-        if(this.score == pickUpsList.Count)
-        {
-            Won();
-        }
-    }
-
-    public void LoseOneLife()
-    {
-        this.health--;
-        livesText.text = health.ToString();
-        StartCoroutine(Flicker(GetComponent<Renderer>(), 0.8f, 0.15f));
-        StartCoroutine(Flicker(livesText.GetComponent<CanvasRenderer>(), 1f, 0.2f, false, false));
-        StartCoroutine("BeInvulnerableTemporarily");
         if (this.health <= 0)
         {
-            Lost();
+            return true;
         }
-    }
-
-
-    // Overloading function: make flickering effect on given objects
-    //For UI objects
-    private IEnumerator Flicker(CanvasRenderer objRenderer, float duration, float interval, bool endGame, bool winning)
-    {
-        //Stop player temporarily (not using timeScale) to prevent runtime bugs
-        if (endGame)
+        else
         {
-            this.movable = false;
-            this.rb.velocity = Vector3.zero; 
+            return false;
         }
-
-        float endTime = Time.unscaledTime + duration;
-        while (Time.unscaledTime < endTime)
-        {
-            objRenderer.SetAlpha(0f); 
-            yield return new WaitForSeconds(interval);
-            objRenderer.SetAlpha(1f);
-            yield return new WaitForSeconds(interval);
-        }
-        objRenderer.SetAlpha(1);
-
-        if (endGame)
-        {
-            if (winning)
-            {
-                StartCoroutine(LoadNewLvl());
-            }
-            else
-            {
-                objRenderer.SetAlpha(0);
-                Reset();
-            }
-        }
-    }
-
-    //For  non-UI objects
+    } 
+     
     private IEnumerator Flicker(Renderer objRenderer, float duration, float interval)
     {
         float endTime = Time.time + duration;
@@ -189,84 +157,68 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator BeInvulnerableTemporarily()
     {
+        this.invulnerable = true;
+        yield return new WaitForSeconds(1f);
+        this.invulnerable = false;
+    }
+
+    private void Pause()
+    {
         invulnerable = true;
-        yield return new WaitForSeconds(1);
-        invulnerable = false;
-    }
-
-    private void Lost()
-    {
-        EndGame(false);
-    }
-
-    private void Won()
-    {
-        EndGame(true);
-    }
-
-
-    private void EndGame(bool winning)
-    {
-
-        if (winning)
-        {
-            alertText.text = "Congratulations!\nYou win!";
-        }
-        else
-        {
-            alertText.text = "You lose!\nRelax, try harder!";
-        }
-        CanvasRenderer renderer = alertText.GetComponent<CanvasRenderer>();
-        renderer.SetAlpha(1);
-        StartCoroutine(Flicker(renderer,1f, 0.2f, true, winning));
+        movable = false;
+        rb.velocity = Vector3.zero;
     }
 
     private void Reset()
     {
-        score = 0;
-        health = 3;
-        livesText.text = health.ToString();
-        scoreText.text = score + "/" + pickUpsList.Count;
-        transform.position = new Vector3(0, 0.6f, 0);
-        foreach(Transform item in pickUpsList)
-        {
-            item.gameObject.SetActive(true);
-        }
-        Time.timeScale = 1;
+        this.health = 3;
+        this.score = 0;
+        this.movable = true;
+        this.invulnerable = false;
+        this.transform.position = new Vector3(0, 0.6f, 0);
     }
 
-
-    private IEnumerator LoadNewLvl()
+    private void LoadNextLvl()
     {
         Debug.Log("Chay vao phan load lvl");
         string currentSceneName = SceneManager.GetActiveScene().name;
         int currentLvl = int.Parse(currentSceneName.Substring(3));
-        PlayerPrefs.SetInt("levelReached", currentLvl + 1);
-        AsyncOperation async;
+        int nextLvl = ++currentLvl;
+        PlayerPrefs.SetInt("levelReached", nextLvl);
+        StartCoroutine(LoadLvl(nextLvl));
+    }
 
-        if (currentLvl >= 16)
+    private IEnumerator LoadLvl(int nextLvl)
+    {
+        AsyncOperation async;
+        if (nextLvl > 5)
         {
             async = SceneManager.LoadSceneAsync("MainMenu");
-        } else
+        }
+        else
         {
-            Debug.Log("Lvl hien tai = " + currentLvl);
-            int nextLvl = ++currentLvl;
             async = SceneManager.LoadSceneAsync("Lvl" + nextLvl);
             Debug.Log("Lvl moi = " + nextLvl);
         }
-
+        while (!async.isDone)
+        {
+            yield return null;
+        }
+    }
+    
+    private IEnumerator LoadBack()
+    {
+        AsyncOperation async = SceneManager.LoadSceneAsync("MainMenu");
         while (!async.isDone)
         {
             yield return null;
         }
     }
 
-
-    private IEnumerator WaitFor(float duration, bool returnVar)
+    private IEnumerator FlagBack()
     {
-        yield return new WaitForSecondsRealtime(duration);
-        returnVar = false;
+        yield return new WaitForSeconds(1f);
+        backCount = 0;
     }
 }
-
 

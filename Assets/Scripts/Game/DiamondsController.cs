@@ -8,7 +8,13 @@ public class DiamondsController : MonoBehaviour {
     private void OnEnable()
     {
         EventsManager.OnResetLvl += Reset;
-        EventsManager.
+        EventsManager.OnPickUp += TouchPlayer;
+    }
+
+    private void OnDisable()
+    {
+        EventsManager.OnResetLvl -= Reset;
+        EventsManager.OnPickUp -= TouchPlayer;
     }
 
     // Update is called once per frame
@@ -16,10 +22,13 @@ public class DiamondsController : MonoBehaviour {
         transform.Rotate(new Vector3(0, 150, 0) * Time.deltaTime);
 	}
 
-
-    private void OnTouchPlayer()
+    private void TouchPlayer(Collider collider, int var)
     {
-        this.transform.localScale = new Vector3(0, 0, 0);
+        if (collider.gameObject.name == this.gameObject.name)
+        {
+            this.transform.localScale = new Vector3(0, 0, 0);
+            Debug.Log(this.gameObject.name + "Touch Player");
+        }
     }
 
     private void Reset()

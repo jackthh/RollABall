@@ -62,9 +62,14 @@
     <Compile Include="Assets\Scripts\Game\CameraController.cs" />
     <Compile Include="Assets\Scripts\Game\DiamondsController.cs" />
     <Compile Include="Assets\Scripts\Game\EventsManager.cs" />
+    <Compile Include="Assets\Scripts\Game\MovingEnemiesController.cs" />
     <Compile Include="Assets\Scripts\Game\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Game\UIController.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\BgSoundController.cs" />
     <Compile Include="Assets\Scripts\MainMenu\LvlSelectionController.cs" />
     <Compile Include="Assets\Scripts\MainMenu\MainMenuController.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\OptionsMenuController.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\SoundEffectController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />

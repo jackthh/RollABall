@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Diamond
   - Enemy
+  - Terrain
+  - BgSound
+  - EffSound
   layers:
   - Default
   - TransparentFX
