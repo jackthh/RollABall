@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour {
@@ -9,10 +9,10 @@ public class UIController : MonoBehaviour {
     /* Parameters to update scores */
     private List<Transform> pickUpsList = new List<Transform>();
     public GameObject pickUps;
-    public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI livesText;
-    public TextMeshProUGUI lvlText;
-    public TextMeshProUGUI alertText;
+    public Text scoreText;
+    public Text livesText;
+    public Text lvlText;
+    public Text alertText;
 
     private void OnEnable()
     {
@@ -39,6 +39,7 @@ public class UIController : MonoBehaviour {
         {
             pickUpsList.Add(pickUps.transform.GetChild(i));
         }
+        livesText.text = "3";
         scoreText.text = 0 + "/" + pickUpsList.Count;
     }
 
