@@ -7,31 +7,31 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    // Parameters for moving
-    private int health = 3;
-    private int score = 0;
+
+	[Header("References")]
+    private List<Transform> pickUpsList = new List<Transform>();
+    public GameObject pickUps;
+
+	[Header("Parameters for movement")]
+    private bool movable = true;
     private Rigidbody rb;
     private bool doJump = false;
-    private bool movable = true;
-    private bool invulnerable = false;
-    private List<Transform> pickUpsList = new List<Transform>();
-    private int backCount = 0;
     public bool jumpable;
     public float verticalSpeed;
     public float horizontalSpeed;
     public float jumpForceMagnitude;
-    public GameObject pickUps;
+
+	[Header("Player status and stats")]
+    private int health = 3;
+    private int score = 0;
+    private bool invulnerable = false;
+
 
     private void OnEnable()
     {
-        EventsManager.OnLoadNewLvl += LoadNextLvl;
         EventsManager.OnResetLvl += Reset;
     }
-    private void OnDisable()
-    {
-        EventsManager.OnLoadNewLvl -= LoadNextLvl;
-        EventsManager.OnResetLvl -= Reset;
-    }
+
 
     // Use this for initialization
     void Start()
@@ -44,22 +44,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
         {
             doJump = true;
         }
-        if (Input.GetKey(KeyCode.Escape) && Application.isMobilePlatform)
-        {
-            backCount++;
-            StartCoroutine(FlagBack());
-            if (backCount > 1)
-            {
-                StartCoroutine(LoadBack());
-            }
-        }
     }
+
 
     private void FixedUpdate()
     {
@@ -89,6 +82,7 @@ public class PlayerController : MonoBehaviour
 
         }
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -125,11 +119,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
     private bool IsGrounded()
     {
         SphereCollider playerCollider = transform.GetComponent<SphereCollider>();
         return Physics.Raycast(playerCollider.bounds.center, Vector3.down, playerCollider.bounds.extents.y + 0.1f);
     }
+
 
     private bool IsDead()
     {
@@ -143,6 +139,7 @@ public class PlayerController : MonoBehaviour
         }
     } 
      
+
     private IEnumerator Flicker(Renderer objRenderer, float duration, float interval)
     {
         float endTime = Time.time + duration;
@@ -155,6 +152,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
     private IEnumerator BeInvulnerableTemporarily()
     {
         this.invulnerable = true;
@@ -162,12 +160,14 @@ public class PlayerController : MonoBehaviour
         this.invulnerable = false;
     }
 
+
     private void Pause()
     {
         invulnerable = true;
         movable = false;
         rb.velocity = Vector3.zero;
     }
+
 
     private void Reset()
     {
@@ -178,47 +178,12 @@ public class PlayerController : MonoBehaviour
         this.transform.position = new Vector3(0, 0.6f, 0);
     }
 
-    private void LoadNextLvl()
-    {
-        Debug.Log("Chay vao phan load lvl");
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        int currentLvl = int.Parse(currentSceneName.Substring(3));
-        int nextLvl = ++currentLvl;
-        PlayerPrefs.SetInt("levelReached", nextLvl);
-        StartCoroutine(LoadLvl(nextLvl));
-    }
 
-    private IEnumerator LoadLvl(int nextLvl)
-    {
-        AsyncOperation async;
-        if (nextLvl > 5)
-        {
-            async = SceneManager.LoadSceneAsync("MainMenu");
-        }
-        else
-        {
-            async = SceneManager.LoadSceneAsync("Lvl" + nextLvl);
-            Debug.Log("Lvl moi = " + nextLvl);
-        }
-        while (!async.isDone)
-        {
-            yield return null;
-        }
-    }
-    
-    private IEnumerator LoadBack()
-    {
-        AsyncOperation async = SceneManager.LoadSceneAsync("MainMenu");
-        while (!async.isDone)
-        {
-            yield return null;
-        }
-    }
 
-    private IEnumerator FlagBack()
-    {
-        yield return new WaitForSeconds(1f);
-        backCount = 0;
-    }
+	private void OnDisable()
+	{
+		EventsManager.OnResetLvl -= Reset;
+	}
+
 }
 
