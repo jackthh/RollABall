@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LvlSelectionController : MonoBehaviour {
+public class LvlSelection : MonoBehaviour {
 
     public GameObject levelButtons;
     private Button[] levelButtonsList;

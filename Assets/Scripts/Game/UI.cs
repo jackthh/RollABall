@@ -4,81 +4,90 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class UIController : MonoBehaviour {
+public class UI : MonoBehaviour {
 
-    /* Parameters to update scores */
-    private List<Transform> pickUpsList = new List<Transform>();
-    public GameObject pickUps;
-    public Text scoreText;
+	[Header("References")]
+	public GameObject gameMasterContainer;
+	private GameMaster gameMaster;
+
+	[Header("Stats Update")]
+	private int coinsCount = 0;
+
+	public Text lvlText;
+	public Text scoreText;
+    public Text coinsText;
     public Text livesText;
-    public Text lvlText;
-    public Text alertText;
 
-    private void OnEnable()
-    {
-        EventsManager.OnPickUp += IncreaseOneScore;
-        EventsManager.OnEndGame += OnEndGame;
-        EventsManager.OnLoseOneLife += LoseOneLife;
-    }
-    private void OnDisable()
-    {
-        EventsManager.OnPickUp -= IncreaseOneScore;
-        EventsManager.OnEndGame -= OnEndGame;
-        EventsManager.OnLoseOneLife -= LoseOneLife;
+	[Header("Display Notifications")]
+	public Text alertText;
 
-    }
 
     private void Start()
     {
+		gameMaster = gameMasterContainer.GetComponent<GameMaster>();
+
         string currentSceneName = SceneManager.GetActiveScene().name;
         int currentLvl = int.Parse(currentSceneName.Substring(3));
         lvlText.text = "Level " + currentLvl;
         alertText.GetComponent<CanvasRenderer>().SetAlpha(0);
-        //Get pick up objects list
-        for (int i = 0; i < pickUps.transform.childCount; i++)
-        {
-            pickUpsList.Add(pickUps.transform.GetChild(i));
-        }
         livesText.text = "3";
-        scoreText.text = 0 + "/" + pickUpsList.Count;
     }
 
-    // Needless to use given Collider argument cause we just wanna change value of Score
-    private void IncreaseOneScore(Collider tmp, int playerScore)
+
+	public void SetCoinsCount(int _coinsCount)
+	{
+		this.coinsCount = _coinsCount;
+	}
+
+
+	// This func will be called from GameMaster
+	public void UpdateScore(float _score)
+	{
+		scoreText.text = _score.ToString();
+		CanvasRenderer canvasRenderer = scoreText.GetComponent<CanvasRenderer>();
+		StartCoroutine(Flicker(canvasRenderer, 1.2f, 0.2f, false, false));
+	}
+
+
+    // This func will be called from GameMaster
+    public void UpdateCoins(int currentCoins)
     {
-        scoreText.text = playerScore + "/" + pickUpsList.Count;
-        CanvasRenderer renderer = scoreText.GetComponent<CanvasRenderer>();
-        StartCoroutine(Flicker(renderer, 1f, 0.2f, false, false));
+        coinsText.text = currentCoins + "/" + this.coinsCount;
+        CanvasRenderer canvasRenderer = coinsText.GetComponent<CanvasRenderer>();
+        StartCoroutine(Flicker(canvasRenderer, 0.8f, 0.2f, false, false));
     }
 
-    private void LoseOneLife(int playerHealth)
+
+    public void UpdateHealth(int playerHealth)
     {
         livesText.text = playerHealth.ToString();
         CanvasRenderer renderer = livesText.GetComponent<CanvasRenderer>();
         StartCoroutine(Flicker(renderer, 1f, 0.2f,false, false));
     }
 
-    private void OnEndGame(bool winning)
+
+    public void OnEndGame(bool winning)
     {
         CanvasRenderer renderer = alertText.GetComponent<CanvasRenderer>();
         renderer.SetAlpha(1);
         if (winning)
         {
             alertText.text = "Congratulations!\nYou win!";
-            StartCoroutine(Flicker(renderer, 1f, 0.2f, true, false));
+            StartCoroutine(Flicker(renderer, 1.2f, 0.2f, true, false));
         }
         else
         {
             alertText.text = "You lose!\nRelax, try harder!";
-            StartCoroutine(Flicker(renderer, 1f, 0.2f,true, true));
+            StartCoroutine(Flicker(renderer, 1.2f, 0.2f,true, true));
         }
         renderer.SetAlpha(0);
     }
 
-    // For UI objects
+
     private IEnumerator Flicker(CanvasRenderer objRenderer, float duration, float interval, bool endGame, bool reset)
     {
         float endTime = Time.unscaledTime + duration;
+
         while (Time.unscaledTime < endTime)
         {
             objRenderer.SetAlpha(0f);
@@ -86,26 +95,28 @@ public class UIController : MonoBehaviour {
             objRenderer.SetAlpha(1f);
             yield return new WaitForSeconds(interval);
         }
+
         objRenderer.SetAlpha(1);
+
         if (endGame)
         {
             if (reset)
             {
-                EventsManager.RaiseOnResetLvl();
-                Reset();
+				gameMaster.Reset();
             }
             else
             {
-                EventsManager.LoadNextLvl();
+                gameMaster.LoadNextLvl();
             }
         }
     }
 
-    private void Reset()
+
+    public void OnReset()
     {
-        scoreText.text = 0 + "/" + pickUpsList.Count;
+		scoreText.text = "0";
+		coinsText.text = "0/" + coinsCount.ToString();
         livesText.text = "3";
-        alertText.text = "";
         alertText.canvasRenderer.SetAlpha(0);
     }
 }

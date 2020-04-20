@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OptionsMenuController : MonoBehaviour {
+public class OptionsMenu : MonoBehaviour {
 
     public Slider bgSlider;
     public Slider effSlider;

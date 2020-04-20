@@ -2,37 +2,55 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DiamondsController : MonoBehaviour {
+public class DiamondsController : MonoBehaviour
+{
 
-    // Add methods to handle events
-    private void OnEnable()
+	private List<Transform> pickUpsList = new List<Transform>();
+
+
+	void Start()
     {
-        EventsManager.OnResetLvl += Reset;
-        EventsManager.OnPickUp += TouchPlayer;
-    }
-
-    private void OnDisable()
-    {
-        EventsManager.OnResetLvl -= Reset;
-        EventsManager.OnPickUp -= TouchPlayer;
-    }
-
-    // Update is called once per frame
-    void Update () {
-        transform.Rotate(new Vector3(0, 150, 0) * Time.deltaTime);
+		for (int i = 0; i < this.transform.childCount; i++)
+		{
+			pickUpsList.Add(this.transform.GetChild(i));
+		}
 	}
 
-    private void TouchPlayer(Collider collider, int var)
-    {
-        if (collider.gameObject.name == this.gameObject.name)
-        {
-            this.transform.localScale = new Vector3(0, 0, 0);
-            Debug.Log(this.gameObject.name + "Touch Player");
-        }
-    }
 
-    private void Reset()
-    {
-        this.transform.localScale = new Vector3(1, 1, 1);
-    }
+	public int TotalCoinsCount()
+	{
+		return pickUpsList.Count;
+	}
+
+
+	public void SetIsPaused(bool value)
+	{
+		foreach (Transform item in pickUpsList)
+		{
+			item.GetComponent<Diamonds>().SetIsPaused(value);
+		}
+	}
+
+
+	public void OnTouchPlayer(Collider _collider)
+	{
+		foreach (Transform item in pickUpsList)
+		{
+			if (item.gameObject.name == _collider.gameObject.name)
+			{
+				item.transform.localScale = Vector3.zero;
+				Debug.Log("Diamond handled: " + item.gameObject.name);
+				break;
+			}
+		}
+	}
+
+
+	public void OnReset()
+	{
+		foreach (Transform item in pickUpsList)
+		{
+			item.transform.localScale = Vector3.one;
+		}
+	}
 }

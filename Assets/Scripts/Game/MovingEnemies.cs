@@ -2,15 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovingEnemiesController : MonoBehaviour {
+public class MovingEnemies : MonoBehaviour {
 
     public Material material1;
     public Material material2;
     public GameObject[] waypoints;
     public float movingSpeed;
     public int startPoint;
-    int current = 0;
-    float margin = 0.5f;
+    private int current;
+	private float margin = 0.5f;
+
+	private bool isPaused = false;
+
+
+	public void SetIsPaused(bool value)
+	{
+		this.isPaused = value;
+	}
+
 
     private void Start()
     {
@@ -18,18 +27,27 @@ public class MovingEnemiesController : MonoBehaviour {
         current = startPoint;
     }
 
+
     private void Update()
     {
-        if (Vector3.Distance(waypoints[current].transform.position, this.transform.position) < margin)
-        {
-            current++;
-            if (current >= waypoints.Length)
-            {
-                current = 0;
-            }
-        }
-        transform.position = Vector3.MoveTowards(transform.position, waypoints[current].transform.position, movingSpeed * Time.deltaTime);
+		if (isPaused)
+		{
+			return;
+		}
+		else
+		{
+			if (Vector3.Distance(waypoints[current].transform.position, this.transform.position) < margin)
+			{
+				current++;
+				if (current >= waypoints.Length)
+				{
+					current = 0;
+				}
+			}
+			transform.position = Vector3.MoveTowards(transform.position, waypoints[current].transform.position, movingSpeed * Time.deltaTime);
+		}
     }
+
 
     private IEnumerator ChangeColor(float interval)
     {

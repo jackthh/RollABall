@@ -61,18 +61,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\AccountsData.cs" />
     <Compile Include="Assets\Scripts\Game\CameraController.cs" />
+    <Compile Include="Assets\Scripts\Game\Diamonds.cs" />
     <Compile Include="Assets\Scripts\Game\DiamondsController.cs" />
-    <Compile Include="Assets\Scripts\Game\EventsManager.cs" />
     <Compile Include="Assets\Scripts\Game\GameMaster.cs" />
-    <Compile Include="Assets\Scripts\Game\MovingEnemiesController.cs" />
-    <Compile Include="Assets\Scripts\Game\PlayerController.cs" />
-    <Compile Include="Assets\Scripts\Game\UIController.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\BgSoundController.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\LvlSelectionController.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\MainMenuController.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\OptionsMenuController.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\SoundEffectController.cs" />
+    <Compile Include="Assets\Scripts\Game\MovingEnemies.cs" />
+    <Compile Include="Assets\Scripts\Game\Player.cs" />
+    <Compile Include="Assets\Scripts\Game\UI.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\BgSound.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\LvlSelectionMenu.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\MainMenu.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\OptionsMenu.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\SoundEffect.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>F:/Unity/RollABall/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

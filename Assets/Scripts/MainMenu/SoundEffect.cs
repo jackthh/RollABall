@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundEffectController : MonoBehaviour {
+public class SoundEffect : MonoBehaviour {
 
     private AudioSource source;
     public AudioClip collecting;
@@ -43,31 +43,20 @@ public class SoundEffectController : MonoBehaviour {
         source = GetComponent<AudioSource>();
     }
 
-    private void OnEnable()
-    {
-        EventsManager.OnPickUp += PlayCollectingEffect;
-        EventsManager.OnLoseOneLife += PlayDieingEffect;
-        EventsManager.OnEndGame += PlayEndGameEffect;
-    }
-
-    private void OnDisable()
-    {
-        EventsManager.OnPickUp -= PlayCollectingEffect;
-        EventsManager.OnLoseOneLife -= PlayDieingEffect;
-        EventsManager.OnEndGame -= PlayEndGameEffect;
-    }
-
-    private void PlayCollectingEffect(Collider dump1, int dump2)
+ 
+    public void PlayCollectingEffect(Collider dump1, int dump2)
     {
         source.PlayOneShot(collecting, this.source.volume);
     }
 
-    private void PlayDieingEffect(int dump)
+
+    public void PlayDieingEffect(int dump)
     {
         source.PlayOneShot(dieing, this.source.volume);
     }
 
-    private void PlayEndGameEffect(bool isVictorious)
+
+    public void PlayEndGameEffect(bool isVictorious)
     {
         if (isVictorious)
         {

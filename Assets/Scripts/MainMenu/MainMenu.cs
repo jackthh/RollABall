@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class MainMenuController : MonoBehaviour {
+public class MainMenu : MonoBehaviour {
 
     public void QuitApp()
     {

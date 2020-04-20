@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BgSoundController : MonoBehaviour {
+public class BgSound : MonoBehaviour {
 
     private AudioSource source;
 
