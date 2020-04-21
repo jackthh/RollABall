@@ -96,4 +96,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  distance: {x: 0, y: 20, z: -20}
+  cameraAnchor: {fileID: 0}
+  routePoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  lerpIndex: 0.5
+  tempPos: {x: 0, y: 0, z: 0}

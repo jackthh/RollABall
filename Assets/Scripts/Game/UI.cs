@@ -11,7 +11,7 @@ public class UI : MonoBehaviour {
 	private GameMaster gameMaster;
 
 	[Header("Stats Update")]
-	private int coinsCount = 0;
+	private int coinsCount;
 
 	public Text lvlText;
 	public Text scoreText;
@@ -30,8 +30,7 @@ public class UI : MonoBehaviour {
         int currentLvl = int.Parse(currentSceneName.Substring(3));
         lvlText.text = "Level " + currentLvl;
         alertText.GetComponent<CanvasRenderer>().SetAlpha(0);
-        livesText.text = "3";
-    }
+	}
 
 
 	public void SetCoinsCount(int _coinsCount)

@@ -14,6 +14,7 @@ public class DiamondsController : MonoBehaviour
 		{
 			pickUpsList.Add(this.transform.GetChild(i));
 		}
+		Debug.Log("diamonds count = " + pickUpsList.Count);
 	}
 
 

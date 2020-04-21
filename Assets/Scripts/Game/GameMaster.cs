@@ -24,17 +24,17 @@ public class GameMaster : MonoBehaviour
 	[Header("Statistics")]
 	public AnimationCurve scoreCurve;
 	private float scoreTime;
-	private int totalCoinsCount = 0;
+	private int totalCoinsCount;
 	private bool isRecording = false;
 
 	private int lvlReached;
-	private int totalScore;
+	private int totalRecordedScore;
 	private int currentScore = 0;
-	private int totalCoins;
+	private int totalRecordedCoins;
 	private int currentCoins = 0;
-	private float totalTime;
+	private float totalRecordedTime;
 	private float currentTime = 0f;
-	private int totalDeaths;
+	private int totalRecordedDeaths;
 	private int currentDeaths = 0;
 
 
@@ -49,20 +49,22 @@ public class GameMaster : MonoBehaviour
 		}
 
 		lvlReached = PlayerPrefs.GetInt("lvlReached", 1);
-		totalScore = PlayerPrefs.GetInt("totalScore", 0);
-		totalCoins = PlayerPrefs.GetInt("totalCoins", 0);
-		totalTime = PlayerPrefs.GetFloat("totalTime", 0f);
-		totalDeaths = PlayerPrefs.GetInt("totalDeaths", 0);
-
-		totalCoinsCount = diamondsController.TotalCoinsCount();
+		totalRecordedScore = PlayerPrefs.GetInt("totalScore", 0);
+		totalRecordedCoins = PlayerPrefs.GetInt("totalCoins", 0);
+		totalRecordedTime = PlayerPrefs.GetFloat("totalTime", 0f);
+		totalRecordedDeaths = PlayerPrefs.GetInt("totalDeaths", 0);
 
 		Reset();
-		StartGame();
 	}
 
 
 	public void StartGame()
 	{
+		// Count coins at StartGame to assure DiamondsController has run
+		totalCoinsCount = diamondsController.TotalCoinsCount();
+		uIController.SetCoinsCount(totalCoinsCount);
+		Debug.Log("master takes coins count = " + totalCoinsCount);
+
 		scoreTime = 0f;
 		PauseGame(false);
 	}
@@ -83,6 +85,11 @@ public class GameMaster : MonoBehaviour
 
 	private void Update()
 	{
+		if (Input.GetKeyDown(KeyCode.P))
+		{
+			StartGame();
+		}
+
 		if (isRecording)
 		{
 		currentTime += Time.deltaTime;
@@ -180,13 +187,13 @@ public class GameMaster : MonoBehaviour
 		{
 			PlayerPrefs.SetInt("levelReached", nextLvl);
 		}
-		PlayerPrefs.SetInt("totalScore", totalScore + currentScore);
+		PlayerPrefs.SetInt("totalScore", totalRecordedScore + currentScore);
 		PlayerPrefs.SetInt("lastLvlScore", currentScore);
-		PlayerPrefs.SetInt("totalCoins", totalCoins + currentCoins);
+		PlayerPrefs.SetInt("totalCoins", totalRecordedCoins + currentCoins);
 		PlayerPrefs.SetInt("lastLvlCoins", currentCoins);
-		PlayerPrefs.SetFloat("totalTime", totalTime + currentTime);
+		PlayerPrefs.SetFloat("totalTime", totalRecordedTime + currentTime);
 		PlayerPrefs.SetFloat("lastLvlTime", currentTime);
-		PlayerPrefs.SetInt("totalDeaths", totalDeaths + currentDeaths);
+		PlayerPrefs.SetInt("totalDeaths", totalRecordedDeaths + currentDeaths);
 		PlayerPrefs.SetInt("lastLvlDeaths", currentDeaths);
 	}
 }
