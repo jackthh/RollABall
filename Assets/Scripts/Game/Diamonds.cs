@@ -16,7 +16,7 @@ public class Diamonds: MonoBehaviour {
 	public void Update () {
 		if (!isPaused)
 		{
-        transform.Rotate(new Vector3(0, 150, 0) * Time.deltaTime);
+        transform.Rotate(new Vector3(60, 80, 100) * Time.deltaTime);
 		}
 	}
 }

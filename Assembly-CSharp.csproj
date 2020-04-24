@@ -72,6 +72,7 @@
     <Compile Include="Assets\Scripts\MainMenu\BgSound.cs" />
     <Compile Include="Assets\Scripts\MainMenu\LvlSelectionMenu.cs" />
     <Compile Include="Assets\Scripts\MainMenu\MainMenu.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\MainMenuPlayer.cs" />
     <Compile Include="Assets\Scripts\MainMenu\OptionsMenu.cs" />
     <Compile Include="Assets\Scripts\MainMenu\SoundEffect.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">

@@ -6,6 +6,7 @@ public class MovingEnemies : MonoBehaviour {
 
     public Material material1;
     public Material material2;
+    public Material material3;
     public GameObject[] waypoints;
     public float movingSpeed;
     public int startPoint;
@@ -36,6 +37,14 @@ public class MovingEnemies : MonoBehaviour {
 		}
 		else
 		{
+			Move();
+			SelfRotate();
+		}
+    }
+
+
+	private void Move()
+	{
 			if (Vector3.Distance(waypoints[current].transform.position, this.transform.position) < margin)
 			{
 				current++;
@@ -45,9 +54,13 @@ public class MovingEnemies : MonoBehaviour {
 				}
 			}
 			transform.position = Vector3.MoveTowards(transform.position, waypoints[current].transform.position, movingSpeed * Time.deltaTime);
-		}
-    }
+	}
 
+
+	private void SelfRotate()
+	{
+		transform.Rotate(new Vector3(0, -150, 0) * Time.deltaTime);
+	}
 
     private IEnumerator ChangeColor(float interval)
     {
@@ -56,6 +69,8 @@ public class MovingEnemies : MonoBehaviour {
             this.GetComponent<Renderer>().material = material1;
             yield return new WaitForSeconds(interval);
             this.GetComponent<Renderer>().material = material2;
+            yield return new WaitForSeconds(interval);
+			this.GetComponent<Renderer>().material = material3;
             yield return new WaitForSeconds(interval);
         }
     }

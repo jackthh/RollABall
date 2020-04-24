@@ -62,8 +62,7 @@ public class Player : MonoBehaviour
 
 			if (jumpable && doJump)
 			{
-				rb.AddForce(Vector3.up * jumpForceMagnitude, ForceMode.Impulse);
-				doJump = false;
+				Jump();
 			}
 
 			float xVelocity = horizontalInput * horizontalSpeed;
@@ -73,6 +72,12 @@ public class Player : MonoBehaviour
 		}
 	}
 
+
+	private void Jump()
+	{
+		rb.AddForce(Vector3.up * jumpForceMagnitude, ForceMode.Impulse);
+		doJump = false;
+	}
 
 	private void OnTriggerEnter(Collider other)
 	{

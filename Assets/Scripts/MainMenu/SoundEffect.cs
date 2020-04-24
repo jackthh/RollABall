@@ -10,10 +10,12 @@ public class SoundEffect : MonoBehaviour {
     public AudioClip losing;
     public AudioClip winning;
 
+
     public float GetVolume()
     {
         return this.source.volume;
     }
+
 
     public void SetVolume(float num)
     {
@@ -23,20 +25,20 @@ public class SoundEffect : MonoBehaviour {
         }
     }
 
+
     private void Awake()
     {
         GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("EffSound");
         if (gameObjects.Length > 1)
         {
             Object.Destroy(this.gameObject);
-            Debug.Log("Destroy on load");
         }
         else
         {
             DontDestroyOnLoad(this.gameObject);
-            Debug.Log("Don't destroy on load");
         }
     }
+
 
     private void Start()
     {
