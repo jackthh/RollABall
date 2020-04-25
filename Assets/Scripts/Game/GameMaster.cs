@@ -187,12 +187,16 @@ public class GameMaster : MonoBehaviour
 		{
 			PlayerPrefs.SetInt("levelReached", nextLvl);
 		}
+
 		PlayerPrefs.SetInt("totalScore", totalRecordedScore + currentScore);
 		PlayerPrefs.SetInt("lastLvlScore", currentScore);
+
 		PlayerPrefs.SetInt("totalCoins", totalRecordedCoins + currentCoins);
 		PlayerPrefs.SetInt("lastLvlCoins", currentCoins);
+
 		PlayerPrefs.SetFloat("totalTime", totalRecordedTime + currentTime);
 		PlayerPrefs.SetFloat("lastLvlTime", currentTime);
+
 		PlayerPrefs.SetInt("totalDeaths", totalRecordedDeaths + currentDeaths);
 		PlayerPrefs.SetInt("lastLvlDeaths", currentDeaths);
 	}
