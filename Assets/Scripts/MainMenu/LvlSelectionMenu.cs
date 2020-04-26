@@ -4,13 +4,19 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LvlSelection : MonoBehaviour {
+public class LvlSelectionMenu : MonoBehaviour {
+
+	public GameObject transitionContainer;
+	private SceneTransition transitionController;
 
     public GameObject levelButtons;
     private Button[] levelButtonsList;
-    // Use this for initialization
+
+
     void Start()
     {
+		transitionController = transitionContainer.GetComponent<SceneTransition>();
+
         int levelReached = PlayerPrefs.GetInt("levelReached", 1);
         levelButtonsList = levelButtons.GetComponentsInChildren<Button>();
         for (int i = 0; i < levelButtonsList.Length; i++)
@@ -29,8 +35,12 @@ public class LvlSelection : MonoBehaviour {
         StartCoroutine(LoadAsyncScene(level.ToString()));
     }
 
+
     IEnumerator LoadAsyncScene(string level)
     {
+		transitionController.OnTransition();
+		yield return new WaitForSecondsRealtime(transitionController.GetTransitionTime());
+
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync("Lvl" + level);
         while(!asyncOperation.isDone)
         {
@@ -44,4 +54,5 @@ public class LvlSelection : MonoBehaviour {
         Debug.Log("Quitted!");
         Application.Quit();
     }
+
 }

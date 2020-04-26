@@ -17,6 +17,9 @@ public class GameMaster : MonoBehaviour
 	public GameObject diamondsContainer;
 	private DiamondsController diamondsController;
 
+	public GameObject transitionContainer;
+	private SceneTransition transitionController;
+
 	[Space]
 	public GameObject movingEnemiesContainer;
 	private MovingEnemies movingEnemiesController;
@@ -43,6 +46,8 @@ public class GameMaster : MonoBehaviour
 		uIController = uIControllerContainer.GetComponent<UI>();
 		playerController = playerContainer.GetComponent<Player>();
 		diamondsController = diamondsContainer.GetComponent<DiamondsController>();
+		transitionController = transitionContainer.GetComponent<SceneTransition>();
+
 		if (movingEnemiesContainer != null)
 		{
 			movingEnemiesController = movingEnemiesContainer.GetComponent<MovingEnemies>();
@@ -153,6 +158,9 @@ public class GameMaster : MonoBehaviour
 
 	private IEnumerator LoadLvl(int nextLvl)
 	{
+		transitionController.OnTransition();
+		yield return new WaitForSecondsRealtime(transitionController.GetTransitionTime());
+
 		AsyncOperation async;
 		if (nextLvl > 5) // Only 5/16 scenes exist
 		{
