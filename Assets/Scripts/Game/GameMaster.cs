@@ -193,19 +193,19 @@ public class GameMaster : MonoBehaviour
 	{
 		if (nextLvl > lvlReached)
 		{
-			PlayerPrefs.SetInt("levelReached", nextLvl);
+			PlayerPrefs.SetInt(Utilities.LVL_REACHED_TAG, nextLvl);
 		}
 
-		PlayerPrefs.SetInt("totalScore", totalRecordedScore + currentScore);
-		PlayerPrefs.SetInt("lastLvlScore", currentScore);
+		PlayerPrefs.SetInt(Utilities.TOTAL_SCORE_TAG, totalRecordedScore + currentScore);
+		PlayerPrefs.SetInt(Utilities.LAST_LVL_SCORE_TAG, currentScore);
 
-		PlayerPrefs.SetInt("totalCoins", totalRecordedCoins + currentCoins);
-		PlayerPrefs.SetInt("lastLvlCoins", currentCoins);
+		PlayerPrefs.SetInt(Utilities.TOTAL_COINS_TAG, totalRecordedCoins + currentCoins);
+		PlayerPrefs.SetInt(Utilities.LAST_LVL_COINS_TAG, currentCoins);
 
-		PlayerPrefs.SetFloat("totalTime", totalRecordedTime + currentTime);
-		PlayerPrefs.SetFloat("lastLvlTime", currentTime);
+		PlayerPrefs.SetFloat(Utilities.TOTAL_TIME_TAG, totalRecordedTime + currentTime);
+		PlayerPrefs.SetFloat(Utilities.LAST_LVL_TIME_TAG, currentTime);
 
-		PlayerPrefs.SetInt("totalDeaths", totalRecordedDeaths + currentDeaths);
-		PlayerPrefs.SetInt("lastLvlDeaths", currentDeaths);
+		PlayerPrefs.SetInt(Utilities.TOTAL_DEATHS_TAG, totalRecordedDeaths + currentDeaths);
+		PlayerPrefs.SetInt(Utilities.LAST_LVL_DEATHS_TAG, currentDeaths);
 	}
 }

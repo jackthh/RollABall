@@ -6,14 +6,37 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour {
 
+	[Header("Play Btn")]
 	public Button playBtn;
 	public AnimationCurve scaleCurve;
+
+	[Header("Transition")]
+	public GameObject transitionContainer;
+	private Animator transitionAnimator;
+	private SceneTransition transitionController;
 
 	private float curveTime = 0f;
 
 
+	private void Start()
+	{
+		transitionAnimator = this.GetComponent<Animator>();
+		transitionController = transitionContainer.GetComponent<SceneTransition>();
+		StartCoroutine(ShowMainMenu());
+		
+	}
+
+
+	IEnumerator ShowMainMenu()
+	{
+		yield return new WaitForSecondsRealtime(transitionController.GetTransitionTime());
+		transitionAnimator.SetTrigger("ShowMainMenu");
+	}
+
+
 	private void Update()
 	{
+		// Animate Play Btn
 		if (curveTime <= 1.6f)
 		{
 			curveTime += Time.deltaTime;

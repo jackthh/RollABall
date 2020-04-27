@@ -697,6 +697,7 @@ GameObject:
   - component: {fileID: 181050614}
   - component: {fileID: 181050613}
   - component: {fileID: 181050612}
+  - component: {fileID: 181050615}
   m_Layer: 5
   m_Name: PlayBtn
   m_TagString: Untagged
@@ -821,6 +822,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 181050610}
   m_CullTransparentMesh: 0
+--- !u!225 &181050615
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 181050610}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &215950647
 GameObject:
   m_ObjectHideFlags: 0
@@ -2573,6 +2586,7 @@ GameObject:
   - component: {fileID: 700194164}
   - component: {fileID: 700194163}
   - component: {fileID: 700194162}
+  - component: {fileID: 700194165}
   m_Layer: 5
   m_Name: QuitBtn
   m_TagString: Untagged
@@ -2686,6 +2700,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 700194160}
   m_CullTransparentMesh: 0
+--- !u!225 &700194165
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700194160}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &703469928
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3036,7 +3062,7 @@ GameObject:
   - component: {fileID: 732527817}
   - component: {fileID: 732527818}
   m_Layer: 5
-  m_Name: StatsReport
+  m_Name: StatsMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3073,13 +3099,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 732527816}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5793430463197d949b8d7e3778024dfa, type: 3}
+  m_Script: {fileID: 11500000, guid: b14ad67e5680d1249bf37b5af03cfb04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgSlider: {fileID: 0}
-  effSlider: {fileID: 0}
-  bgManager: {fileID: 732384422}
-  effManager: {fileID: 161972464}
+  totalScore: {fileID: 1440731591}
+  lastScore: {fileID: 1444795020}
+  totalCoins: {fileID: 1026120846}
+  lastCoins: {fileID: 762855973}
+  totalTime: {fileID: 1773780628}
+  lastTime: {fileID: 1907922043}
+  totalDeaths: {fileID: 1958709307}
+  lastDeaths: {fileID: 406683477}
 --- !u!1 &733267043
 GameObject:
   m_ObjectHideFlags: 0
@@ -5664,6 +5694,7 @@ GameObject:
   - component: {fileID: 1151458531}
   - component: {fileID: 1151458530}
   - component: {fileID: 1151458529}
+  - component: {fileID: 1151458532}
   m_Layer: 5
   m_Name: OptionsBtn
   m_TagString: Untagged
@@ -5788,6 +5819,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1151458527}
   m_CullTransparentMesh: 0
+--- !u!225 &1151458532
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151458527}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1158430297
 GameObject:
   m_ObjectHideFlags: 0
@@ -10013,8 +10056,9 @@ GameObject:
   - component: {fileID: 1931142901}
   - component: {fileID: 1931142900}
   - component: {fileID: 1931142899}
+  - component: {fileID: 1931142902}
   m_Layer: 5
-  m_Name: Statistics
+  m_Name: StatsBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10137,6 +10181,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1931142897}
   m_CullTransparentMesh: 0
+--- !u!225 &1931142902
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931142897}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1946285918
 GameObject:
   m_ObjectHideFlags: 0
@@ -10279,6 +10335,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1957564770}
   - component: {fileID: 1957564771}
+  - component: {fileID: 1957564772}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
@@ -10355,6 +10412,26 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  transitionContainer: {fileID: 77623083}
+--- !u!95 &1957564772
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957564769}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0c65b7c8d1c107642b5d554a9c5b5858, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1958709305
 GameObject:
   m_ObjectHideFlags: 0
@@ -11295,6 +11372,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SceneTransition
+      objectReference: {fileID: 0}
+    - target: {fileID: 8002491050394464561, guid: d1e495d4caed7944296dde2a6fe1e792,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8002491050394464566, guid: d1e495d4caed7944296dde2a6fe1e792,
         type: 3}
