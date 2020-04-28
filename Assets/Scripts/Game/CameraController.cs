@@ -59,11 +59,11 @@ public class CameraController : MonoBehaviour
 		{
 			if (Input.GetKeyDown(KeyCode.J))
 			{
-				lerpIndex += 0.05f;
+				lerpIndex += 0.01f;
 			}
 			else
 			{
-				lerpIndex -= 0.05f;
+				lerpIndex -= 0.01f;
 			}
 
 			lerpIndex = Mathf.Clamp01(lerpIndex);

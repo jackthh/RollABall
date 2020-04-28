@@ -1447,6 +1447,11 @@ PrefabInstance:
       propertyPath: gameMasterContainer
       value: 
       objectReference: {fileID: 991396885}
+    - target: {fileID: 8007328211936358079, guid: b7a18490d4131f04bbc06540a34fb187,
+        type: 3}
+      propertyPath: jumpable
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7a18490d4131f04bbc06540a34fb187, type: 3}
 --- !u!1 &1515862918 stripped

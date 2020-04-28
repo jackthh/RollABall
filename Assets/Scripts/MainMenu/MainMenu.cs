@@ -6,30 +6,52 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour {
 
-	[Header("Play Btn")]
-	public Button playBtn;
-	public AnimationCurve scaleCurve;
+	[Header("Player ref")]
+	public GameObject playerContainer;
+	private MainMenuPlayer player;
 
 	[Header("Transition")]
 	public GameObject transitionContainer;
 	private Animator transitionAnimator;
 	private SceneTransition transitionController;
 
+	[Header("Play Btn")]
+	public Button playBtn;
+	public AnimationCurve scaleCurve;
+
 	private float curveTime = 0f;
+
+	private bool initRun = true;
 
 
 	private void Start()
 	{
 		transitionAnimator = this.GetComponent<Animator>();
+	}
+
+
+	private void OnEnable()
+	{
+		// Needed to get references now cause OnEnable() is called before Start()
 		transitionController = transitionContainer.GetComponent<SceneTransition>();
+		player = playerContainer.GetComponent<MainMenuPlayer>();
+
+		// These functions will be called everytime MainMenu is activated
 		StartCoroutine(ShowMainMenu());
-		
+		player.Reset();
+
 	}
 
 
 	IEnumerator ShowMainMenu()
 	{
-		yield return new WaitForSecondsRealtime(transitionController.GetTransitionTime());
+		// Make sure we dont have to wait for "2s" if it's not the game start
+		if (this.initRun)
+		{
+			yield return new WaitForSecondsRealtime(transitionController.GetTransitionTime());
+			this.initRun = false;
+		}
+
 		transitionAnimator.SetTrigger("ShowMainMenu");
 	}
 

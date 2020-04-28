@@ -105,4 +105,13 @@ public class MainMenuPlayer : MonoBehaviour
 		yield return new WaitForSeconds(9f);
 		_collider.transform.localScale = new Vector3(5, 5, 5);
 	}
+
+
+	public void Reset()
+	{
+		this.transform.position = startPoint.position;
+		checkingNeeded = true;
+		jumping = false;
+		moving = true;
+	}
 }

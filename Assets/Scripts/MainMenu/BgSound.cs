@@ -12,12 +12,10 @@ public class BgSound : MonoBehaviour {
         if (gameObjects.Length > 1)
         {
             Object.Destroy(this.gameObject);
-            Debug.Log("Destroy on load");
         }
         else
         {
             DontDestroyOnLoad(this.gameObject);
-            Debug.Log("Don't destroy on load");
         }
     }
 
