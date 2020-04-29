@@ -17,7 +17,7 @@ public class LvlSelectionMenu : MonoBehaviour {
     {
 		transitionController = transitionContainer.GetComponent<SceneTransition>();
 
-        int levelReached = PlayerPrefs.GetInt("levelReached", 1);
+        int levelReached = PlayerPrefs.GetInt(Utilities.LVL_REACHED_TAG, 1);
         levelButtonsList = levelButtons.GetComponentsInChildren<Button>();
         for (int i = 0; i < levelButtonsList.Length; i++)
         {

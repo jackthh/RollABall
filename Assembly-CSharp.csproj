@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\Game\CameraController.cs" />
     <Compile Include="Assets\Scripts\Game\Diamonds.cs" />
     <Compile Include="Assets\Scripts\Game\DiamondsController.cs" />
+    <Compile Include="Assets\Scripts\Game\FortuneWheel.cs" />
     <Compile Include="Assets\Scripts\Game\GameMaster.cs" />
     <Compile Include="Assets\Scripts\Game\MovingEnemies.cs" />
     <Compile Include="Assets\Scripts\Game\Player.cs" />

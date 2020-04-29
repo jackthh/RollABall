@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class UI : MonoBehaviour {
-
 	[Header("References")]
 	public GameObject gameMasterContainer;
 	private GameMaster gameMaster;
