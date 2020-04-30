@@ -17,4 +17,15 @@ public static class Utilities
 	public static string TOTAL_DEATHS_TAG = "totalDeaths";
 	public static string LAST_LVL_DEATHS_TAG = "lastLvlDeaths";
 
+
+	public static float DegreeToRad(float _degree)
+	{
+		return _degree * Mathf.PI / 180;
+	}
+
+
+	public static float RadToDegree(float _rad)
+	{
+		return 180 * _rad / Mathf.PI;
+	}
 }
