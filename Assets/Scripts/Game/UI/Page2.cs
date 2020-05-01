@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FortuneWheel : MonoBehaviour
+public class Page2 : MonoBehaviour
 {
+
+	[Header("Refs")]
+	public Text subBonusText;
+	private Animator animator;
 
 	[Header("Spin parameters")]
 	public Transform rotor;
@@ -26,7 +30,7 @@ public class FortuneWheel : MonoBehaviour
 
 	// Parameters to pick result
 	private readonly float[] results = new float[] { 1.1f, 2f, 2.5f, 1f, 4f, 3f, 1.5f };
-	private int result;
+	private int resultIndex;
 	private readonly int[] normalResult = new int[] { 3, 0, 6, 1 };
 	private readonly int[] rareResult = new int[] { 2, 5 };
 	private readonly int[] superRareResult = new int[] { 4 };
@@ -34,17 +38,16 @@ public class FortuneWheel : MonoBehaviour
 
 	private void Start()
 	{
-		//spinSpeed = Utilities.DegreeToRad(spinSpeed);
-		//speedThreshold = Utilities.DegreeToRad(speedThreshold);
-		//acceleration = Utilities.DegreeToRad(acceleration);
+		animator = GetComponent<Animator>();
 	}
 
 
 	public void OnRoll()
 	{
-		result = PickRandomResult();
-		Debug.Log("Result = " + result);
+		resultIndex = PickRandomResult();
+		Debug.Log("Result = " + resultIndex);
 		Rotate();
+		animator.SetTrigger("WheelClick");
 	}
 
 
@@ -105,12 +108,10 @@ public class FortuneWheel : MonoBehaviour
 			// Stop the wheel
 			if (Mathf.Abs(spinSpeed) <= 2)
 			{
-				if (logDebug)
-				{
-					Debug.Log("Duration = " + (Time.realtimeSinceStartup - startToEndTime));
-					logDebug = false;
-				}
-				return;
+				doSpin = false;
+				subBonusText.text = "x " + results[resultIndex];
+				animator.SetTrigger("WheelGotResult");
+				Debug.Log("Duration = " + (Time.realtimeSinceStartup - startToEndTime));
 			}
 
 			rotor.Rotate(new Vector3(0, 0, spinSpeed * Time.deltaTime));
@@ -170,9 +171,9 @@ public class FortuneWheel : MonoBehaviour
 		float maxAngle;
 		float resultAngle;
 
-		minAngle = (result - 0.5f) * cellWidth;
+		minAngle = (resultIndex - 0.5f) * cellWidth;
 		Debug.Log("Min Angle = " + minAngle);
-		maxAngle = (result + 0.5f) * cellWidth;
+		maxAngle = (resultIndex + 0.5f) * cellWidth;
 		Debug.Log("Max Angle = " + maxAngle);
 
 		resultAngle = Random.Range(minAngle, maxAngle);

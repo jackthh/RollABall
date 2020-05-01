@@ -62,13 +62,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Game\CameraController.cs" />
-    <Compile Include="Assets\Scripts\Game\Diamonds.cs" />
-    <Compile Include="Assets\Scripts\Game\DiamondsController.cs" />
-    <Compile Include="Assets\Scripts\Game\FortuneWheel.cs" />
     <Compile Include="Assets\Scripts\Game\GameMaster.cs" />
-    <Compile Include="Assets\Scripts\Game\MovingEnemies.cs" />
-    <Compile Include="Assets\Scripts\Game\Player.cs" />
-    <Compile Include="Assets\Scripts\Game\UI.cs" />
+    <Compile Include="Assets\Scripts\Game\GameObjects\Diamonds.cs" />
+    <Compile Include="Assets\Scripts\Game\GameObjects\DiamondsController.cs" />
+    <Compile Include="Assets\Scripts\Game\GameObjects\MovingEnemies.cs" />
+    <Compile Include="Assets\Scripts\Game\GameObjects\Player.cs" />
+    <Compile Include="Assets\Scripts\Game\UI\Page2.cs" />
+    <Compile Include="Assets\Scripts\Game\UI\StartDialog.cs" />
+    <Compile Include="Assets\Scripts\Game\UI\UI.cs" />
     <Compile Include="Assets\Scripts\General\SceneTransition.cs" />
     <Compile Include="Assets\Scripts\General\Utilities.cs" />
     <Compile Include="Assets\Scripts\MainMenu\BgSound.cs" />

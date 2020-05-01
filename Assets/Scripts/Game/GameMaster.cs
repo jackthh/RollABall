@@ -7,24 +7,26 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class GameMaster : MonoBehaviour
 {
-	[Header("References")]
+	[Header("UI Refs")]
 	public GameObject uIControllerContainer;
 	private UI uIController;
 
+	[Header("General Refs")]
+	public GameObject transitionContainer;
+	private SceneTransition transitionController;
+
+	[Header("Game Objects Refs")]
 	public GameObject playerContainer;
 	private Player playerController;
 
 	public GameObject diamondsContainer;
 	private DiamondsController diamondsController;
 
-	public GameObject transitionContainer;
-	private SceneTransition transitionController;
-
 	[Space]
 	public GameObject movingEnemiesContainer;
 	private MovingEnemies movingEnemiesController;
 
-	[Header("Statistics")]
+	[Header("Statistics Parameters")]
 	public AnimationCurve scoreCurve;
 	private float scoreTime;
 	private int totalCoinsCount;
@@ -72,6 +74,18 @@ public class GameMaster : MonoBehaviour
 
 		scoreTime = 0f;
 		PauseGame(false);
+	}
+
+
+	public void OnPage2PlayClick()
+	{
+
+	}
+
+
+	public void OnMainMenuClick()
+	{
+
 	}
 
 
