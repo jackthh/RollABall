@@ -11,6 +11,9 @@ public class GameMaster : MonoBehaviour
 	public GameObject uIControllerContainer;
 	private UI uIController;
 
+	public GameObject startDialogContainer;
+	private Animator startDialogAnimator;
+
 	[Header("General Refs")]
 	public GameObject transitionContainer;
 	private SceneTransition transitionController;
@@ -42,10 +45,20 @@ public class GameMaster : MonoBehaviour
 	private int totalRecordedDeaths;
 	private int currentDeaths = 0;
 
+	private float boostMult = 1f;
+
+
+	public void SetBoostMult(float _boostMult)
+	{
+		this.boostMult = _boostMult;
+	}
+
 
 	private void Start()
 	{
+		// Get references
 		uIController = uIControllerContainer.GetComponent<UI>();
+		startDialogAnimator = startDialogContainer.GetComponent<Animator>();
 		playerController = playerContainer.GetComponent<Player>();
 		diamondsController = diamondsContainer.GetComponent<DiamondsController>();
 		transitionController = transitionContainer.GetComponent<SceneTransition>();
@@ -61,17 +74,37 @@ public class GameMaster : MonoBehaviour
 		totalRecordedTime = PlayerPrefs.GetFloat("totalTime", 0f);
 		totalRecordedDeaths = PlayerPrefs.GetInt("totalDeaths", 0);
 
+		// Init coins value
+		totalCoinsCount = diamondsController.TotalCoinsCount();
+		uIController.SetCoinsCount(totalCoinsCount);
+		Debug.Log("master takes coins count = " + totalCoinsCount);
+
+		// Setup environment
 		Reset();
+		PauseGame(true);
+
+		// Show pop up UI
+		StartCoroutine(ShowStartDialog());
+	}
+
+
+	IEnumerator ShowStartDialog()
+	{
+		yield return new WaitForSecondsRealtime(transitionController.GetTransitionTime());
+
+		if (PlayerPrefs.GetInt(Utilities.SHOW_TUT_TAG, 1) == 1)
+		{
+			startDialogAnimator.SetTrigger("Start_ShowTut");
+		}
+		else
+		{
+			startDialogAnimator.SetTrigger("Start_NotShowTut");
+		}
 	}
 
 
 	public void StartGame()
 	{
-		// Count coins at StartGame to assure DiamondsController has run
-		totalCoinsCount = diamondsController.TotalCoinsCount();
-		uIController.SetCoinsCount(totalCoinsCount);
-		Debug.Log("master takes coins count = " + totalCoinsCount);
-
 		scoreTime = 0f;
 		PauseGame(false);
 	}
@@ -79,13 +112,13 @@ public class GameMaster : MonoBehaviour
 
 	public void OnPage2PlayClick()
 	{
-
+		StartGame();
 	}
 
 
 	public void OnMainMenuClick()
 	{
-
+		StartCoroutine(LoadLvl(0));
 	}
 
 
@@ -104,11 +137,6 @@ public class GameMaster : MonoBehaviour
 
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.P))
-		{
-			StartGame();
-		}
-
 		if (isRecording)
 		{
 		currentTime += Time.deltaTime;
@@ -170,20 +198,21 @@ public class GameMaster : MonoBehaviour
 	}
 
 
-	private IEnumerator LoadLvl(int nextLvl)
+	private IEnumerator LoadLvl(int lvlIndex)
 	{
 		transitionController.OnTransition();
 		yield return new WaitForSecondsRealtime(transitionController.GetTransitionTime());
 
 		AsyncOperation async;
-		if (nextLvl > 5) // Only 5/16 scenes exist
+		if (lvlIndex > 5 || lvlIndex == 0) // Only 5/16 scenes already exist
 		{
 			async = SceneManager.LoadSceneAsync("MainMenu");
 		}
 		else
 		{
-			async = SceneManager.LoadSceneAsync("Lvl" + nextLvl);
-			Debug.Log("Lvl moi = " + nextLvl);
+			PlayerPrefs.SetInt(Utilities.SHOW_TUT_TAG, 0);
+			async = SceneManager.LoadSceneAsync("Lvl" + lvlIndex);
+			Debug.Log("Lvl moi = " + lvlIndex);
 		}
 		while (!async.isDone)
 		{
@@ -198,8 +227,6 @@ public class GameMaster : MonoBehaviour
 		uIController.OnReset();
 		playerController.OnReset();
 		diamondsController.OnReset();
-
-		StartGame();
 	}
 
 

@@ -38,6 +38,7 @@ public class LvlSelectionMenu : MonoBehaviour {
 
     IEnumerator LoadAsyncScene(string level)
     {
+		PlayerPrefs.SetInt(Utilities.SHOW_TUT_TAG, 1);
 		transitionController.OnTransition();
 		yield return new WaitForSecondsRealtime(transitionController.GetTransitionTime());
 

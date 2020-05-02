@@ -5,6 +5,8 @@ public static class Utilities
 {
 	public static string LVL_REACHED_TAG = "levelReached";
 
+	public static string SHOW_TUT_TAG = "showTut";
+
 	public static string TOTAL_SCORE_TAG = "totalScore";
 	public static string LAST_LVL_SCORE_TAG = "lastLvlScore";
 

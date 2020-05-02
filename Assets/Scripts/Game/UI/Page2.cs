@@ -7,6 +7,7 @@ public class Page2 : MonoBehaviour
 {
 
 	[Header("Refs")]
+	public GameMaster gameMaster;
 	public Text subBonusText;
 	private Animator animator;
 
@@ -15,7 +16,6 @@ public class Page2 : MonoBehaviour
 	[SerializeField]
 	private float spinSpeed = 1000f;
 	// TODO: Delete later
-	private bool logDebug = true;
 	private float startToEndTime = 0f;
 
 	private bool doSpin = false;
@@ -24,7 +24,7 @@ public class Page2 : MonoBehaviour
 	[SerializeField]
 	private float speedThreshold = 80f;
 	[SerializeField]
-	private float acceleration = -100f;
+	private float acceleration = -150f;
 
 	private float finalAcceleration = 0f;
 
@@ -110,6 +110,7 @@ public class Page2 : MonoBehaviour
 			{
 				doSpin = false;
 				subBonusText.text = "x " + results[resultIndex];
+				gameMaster.SetBoostMult(results[resultIndex]);
 				animator.SetTrigger("WheelGotResult");
 				Debug.Log("Duration = " + (Time.realtimeSinceStartup - startToEndTime));
 			}

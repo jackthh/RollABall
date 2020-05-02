@@ -12,8 +12,8 @@ public class MainMenu : MonoBehaviour {
 
 	[Header("Transition")]
 	public GameObject transitionContainer;
-	private Animator transitionAnimator;
 	private SceneTransition transitionController;
+	private Animator transitionAnimator;
 
 	[Header("Play Btn")]
 	public Button playBtn;
@@ -48,6 +48,7 @@ public class MainMenu : MonoBehaviour {
 		// Make sure we dont have to wait for "2s" if it's not the game start
 		if (this.initRun)
 		{
+			// Wait for the scene transition
 			yield return new WaitForSecondsRealtime(transitionController.GetTransitionTime());
 			this.initRun = false;
 		}

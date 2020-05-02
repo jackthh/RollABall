@@ -28,7 +28,7 @@ public class DiamondsController : MonoBehaviour
 	{
 		foreach (Transform item in pickUpsList)
 		{
-			item.GetComponent<Diamonds>().SetIsPaused(value);
+			item.GetComponentInChildren<Diamonds>().SetIsPaused(value);
 		}
 	}
 
