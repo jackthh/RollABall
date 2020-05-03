@@ -27,8 +27,8 @@ public class StatsMenu : MonoBehaviour
 		totalCoins.text = PlayerPrefs.GetInt(Utilities.TOTAL_COINS_TAG, 0).ToString();
 		lastCoins.text = PlayerPrefs.GetInt(Utilities.LAST_LVL_COINS_TAG, 0).ToString();
 
-		totalTime.text = PlayerPrefs.GetFloat(Utilities.TOTAL_TIME_TAG, 0f).ToString();
-		lastTime.text = PlayerPrefs.GetFloat(Utilities.LAST_LVL_TIME_TAG, 0f).ToString();
+		totalTime.text = PlayerPrefs.GetFloat(Utilities.TOTAL_TIME_TAG, 0f).ToString("0.00");
+		lastTime.text = PlayerPrefs.GetFloat(Utilities.LAST_LVL_TIME_TAG, 0f).ToString("0.00");
 
 		totalDeaths.text = PlayerPrefs.GetInt(Utilities.TOTAL_DEATHS_TAG, 0).ToString();
 		lastDeaths.text = PlayerPrefs.GetInt(Utilities.LAST_LVL_DEATHS_TAG, 0).ToString();

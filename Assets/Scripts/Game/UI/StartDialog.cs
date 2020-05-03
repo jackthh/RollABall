@@ -24,6 +24,7 @@ public class StartDialog : MonoBehaviour
 		animator.SetTrigger("Page1Next");
 		videoPlayer1Container.GetComponentInChildren<UnityEngine.Video.VideoPlayer>().Stop();
 		videoPlayer2Container.GetComponentInChildren<UnityEngine.Video.VideoPlayer>().Stop();
+		gameMaster.OnPage1NextClick();
 	}
 
 

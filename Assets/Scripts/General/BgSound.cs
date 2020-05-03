@@ -6,6 +6,7 @@ public class BgSound : MonoBehaviour {
 
     private AudioSource source;
 
+
     private void Awake()
     {
         GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("BgSound");
@@ -19,6 +20,7 @@ public class BgSound : MonoBehaviour {
         }
     }
 
+
     private void Start()
     {
         source = this.GetComponent<AudioSource>();
@@ -30,6 +32,7 @@ public class BgSound : MonoBehaviour {
         return this.source.volume;
     }
 
+
     public void SetVolume(float num)
     {
         if (0 <= num && num <= 1)
@@ -37,4 +40,16 @@ public class BgSound : MonoBehaviour {
             source.volume = num;
         }
     }
+
+
+	public void Pause()
+	{
+		source.Pause();
+	}
+
+
+	public void UnPause()
+	{
+		source.UnPause();
+	}
 }

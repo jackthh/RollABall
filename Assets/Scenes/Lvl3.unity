@@ -532,6 +532,11 @@ PrefabInstance:
       propertyPath: transitionContainer
       value: 
       objectReference: {fileID: 1412079724}
+    - target: {fileID: 3491313164925622102, guid: 30321d1bb7529fc4b8a1c2661e5a3395,
+        type: 3}
+      propertyPath: startDialogContainer
+      value: 
+      objectReference: {fileID: 1286372602}
     - target: {fileID: 3491313164925622103, guid: 30321d1bb7529fc4b8a1c2661e5a3395,
         type: 3}
       propertyPath: m_Name
@@ -1200,11 +1205,22 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1708402560595284548, guid: ad362198318bcd34eac7e1bef1284225,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -18.599976
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad362198318bcd34eac7e1bef1284225, type: 3}
 --- !u!1 &1286372601 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1300706143800475480, guid: ad362198318bcd34eac7e1bef1284225,
+    type: 3}
+  m_PrefabInstance: {fileID: 1286372600}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1286372602 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7716810397525670538, guid: ad362198318bcd34eac7e1bef1284225,
     type: 3}
   m_PrefabInstance: {fileID: 1286372600}
   m_PrefabAsset: {fileID: 0}

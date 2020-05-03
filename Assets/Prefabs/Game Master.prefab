@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uIControllerContainer: {fileID: 0}
+  startDialogContainer: {fileID: 0}
+  transitionContainer: {fileID: 0}
   playerContainer: {fileID: 0}
   diamondsContainer: {fileID: 0}
   movingEnemiesContainer: {fileID: 0}

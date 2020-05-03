@@ -70,14 +70,14 @@
     <Compile Include="Assets\Scripts\Game\UI\Page2.cs" />
     <Compile Include="Assets\Scripts\Game\UI\StartDialog.cs" />
     <Compile Include="Assets\Scripts\Game\UI\UI.cs" />
+    <Compile Include="Assets\Scripts\General\BgSound.cs" />
     <Compile Include="Assets\Scripts\General\SceneTransition.cs" />
+    <Compile Include="Assets\Scripts\General\SoundEffect.cs" />
     <Compile Include="Assets\Scripts\General\Utilities.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\BgSound.cs" />
     <Compile Include="Assets\Scripts\MainMenu\LvlSelectionMenu.cs" />
     <Compile Include="Assets\Scripts\MainMenu\MainMenu.cs" />
     <Compile Include="Assets\Scripts\MainMenu\MainMenuPlayer.cs" />
     <Compile Include="Assets\Scripts\MainMenu\OptionsMenu.cs" />
-    <Compile Include="Assets\Scripts\MainMenu\SoundEffect.cs" />
     <Compile Include="Assets\Scripts\MainMenu\StatsMenu.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>F:/Unity/RollABall/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>

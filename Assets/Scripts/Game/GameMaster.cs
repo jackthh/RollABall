@@ -18,6 +18,9 @@ public class GameMaster : MonoBehaviour
 	public GameObject transitionContainer;
 	private SceneTransition transitionController;
 
+	private BgSound bgSoundManager;
+	private SoundEffect effSoundManager;
+
 	[Header("Game Objects Refs")]
 	public GameObject playerContainer;
 	private Player playerController;
@@ -25,15 +28,16 @@ public class GameMaster : MonoBehaviour
 	public GameObject diamondsContainer;
 	private DiamondsController diamondsController;
 
-	[Space]
+	[Tooltip("Optional ref")]
 	public GameObject movingEnemiesContainer;
 	private MovingEnemies movingEnemiesController;
 
+	// INTERNAL PARAMETERS
 	[Header("Statistics Parameters")]
 	public AnimationCurve scoreCurve;
 	private float scoreTime;
 	private int totalCoinsCount;
-	private bool isRecording = false;
+	private bool gameRunning = false;
 
 	private int lvlReached;
 	private int totalRecordedScore;
@@ -45,12 +49,27 @@ public class GameMaster : MonoBehaviour
 	private int totalRecordedDeaths;
 	private int currentDeaths = 0;
 
+	[Header("Score Boosting Parameters")]
+	private bool isBoosting = false;
 	private float boostMult = 1f;
+	private float wheelResult = 1f;
+	[SerializeField]
+	private float maxBoostTime = 15f;
+	private float boostTimeRemaining;
+	[SerializeField]
+	private float boostTimeBonus = 3f;
 
 
 	public void SetBoostMult(float _boostMult)
 	{
+		this.wheelResult = _boostMult;
 		this.boostMult = _boostMult;
+	}
+
+
+	private void SetBoostTimeRemaining(float _boostTime)
+	{
+		this.boostTimeRemaining = Mathf.Clamp(_boostTime, 0f, maxBoostTime);
 	}
 
 
@@ -61,7 +80,10 @@ public class GameMaster : MonoBehaviour
 		startDialogAnimator = startDialogContainer.GetComponent<Animator>();
 		playerController = playerContainer.GetComponent<Player>();
 		diamondsController = diamondsContainer.GetComponent<DiamondsController>();
+
 		transitionController = transitionContainer.GetComponent<SceneTransition>();
+		bgSoundManager = GameObject.FindGameObjectWithTag(Utilities.BG_SOUND_MANAGER_TAG).GetComponent<BgSound>();
+		effSoundManager = GameObject.FindGameObjectWithTag(Utilities.EFF_SOUND_MANAGER_TAG).GetComponent<SoundEffect>();
 
 		if (movingEnemiesContainer != null)
 		{
@@ -79,6 +101,8 @@ public class GameMaster : MonoBehaviour
 		uIController.SetCoinsCount(totalCoinsCount);
 		Debug.Log("master takes coins count = " + totalCoinsCount);
 
+		uIController.SetMaxBoostTime(this.maxBoostTime);
+
 		// Setup environment
 		Reset();
 		PauseGame(true);
@@ -91,6 +115,7 @@ public class GameMaster : MonoBehaviour
 	IEnumerator ShowStartDialog()
 	{
 		yield return new WaitForSecondsRealtime(transitionController.GetTransitionTime());
+		bgSoundManager.Pause();
 
 		if (PlayerPrefs.GetInt(Utilities.SHOW_TUT_TAG, 1) == 1)
 		{
@@ -105,8 +130,15 @@ public class GameMaster : MonoBehaviour
 
 	public void StartGame()
 	{
+		isBoosting = true;
 		scoreTime = 0f;
 		PauseGame(false);
+	}
+
+
+	public void OnPage1NextClick()
+	{
+		bgSoundManager.UnPause();
 	}
 
 
@@ -124,7 +156,7 @@ public class GameMaster : MonoBehaviour
 
 	public void PauseGame(bool isPaused)
 	{
-		isRecording = !isPaused;
+		gameRunning = !isPaused;
 
 		playerController.SetIsPaused(isPaused);
 		diamondsController.SetIsPaused(isPaused);
@@ -137,16 +169,34 @@ public class GameMaster : MonoBehaviour
 
 	private void Update()
 	{
-		if (isRecording)
+		if (gameRunning)
 		{
-		currentTime += Time.deltaTime;
-		scoreTime += Time.deltaTime;
+			currentTime += Time.deltaTime;
+			scoreTime += Time.deltaTime;
+
+			if (isBoosting)
+			{
+				if (boostTimeRemaining < 0f)
+				{
+					isBoosting = false;
+					boostTimeRemaining = 0f;
+					boostMult = 1f;
+				}
+				else
+				{
+					boostTimeRemaining -= Time.deltaTime;
+				}
+
+				uIController.OnBoostTimeRemainingChange(boostTimeRemaining);
+			}
 		}
 	}
 
 
 	public void OnCollectPickUps(Collider _collider)
 	{
+		effSoundManager.PlayCollectingEffect();
+
 		diamondsController.OnTouchPlayer(_collider);
 
 		int score = CalculateScore();
@@ -159,17 +209,25 @@ public class GameMaster : MonoBehaviour
 		if (this.currentCoins == this.totalCoinsCount)
 		{
 			PauseGame(true);
+			effSoundManager.PlayEndGameEffect(true);
 			uIController.OnEndGame(true);
+		}
+
+		if (isBoosting)
+		{
+			SetBoostTimeRemaining(boostTimeRemaining + boostTimeBonus);
 		}
 	}
 
 
 	public void OnTouchEnemies()
 	{
+		effSoundManager.PlayDieingEffect();
 		uIController.UpdateHealth(playerController.GetHealth());
 
 		if (playerController.IsDead())
 		{
+			effSoundManager.PlayEndGameEffect(false);
 			currentDeaths++;
 			PauseGame(true);
 			uIController.OnEndGame(false);
@@ -180,7 +238,7 @@ public class GameMaster : MonoBehaviour
 	private int CalculateScore()
 	{
 		Debug.Log("Score time = " + scoreTime);
-		int score = (int) Mathf.Round(scoreCurve.Evaluate(scoreTime));
+		int score = (int) Mathf.Round(scoreCurve.Evaluate(scoreTime) * this.boostMult);
 		Debug.Log("Curve cal = " + scoreCurve.Evaluate(scoreTime));
 		scoreTime = 0f;
 		return score;
@@ -223,6 +281,9 @@ public class GameMaster : MonoBehaviour
 
 	public void Reset()
 	{
+		this.boostMult = this.wheelResult;
+		SetBoostTimeRemaining(this.maxBoostTime);
+
 		uIController.SetCoinsCount(totalCoinsCount);
 		uIController.OnReset();
 		playerController.OnReset();

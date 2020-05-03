@@ -46,13 +46,13 @@ public class SoundEffect : MonoBehaviour {
     }
 
  
-    public void PlayCollectingEffect(Collider dump1, int dump2)
+    public void PlayCollectingEffect()
     {
         source.PlayOneShot(collecting, this.source.volume);
     }
 
 
-    public void PlayDieingEffect(int dump)
+    public void PlayDieingEffect()
     {
         source.PlayOneShot(dieing, this.source.volume);
     }

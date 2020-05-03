@@ -3,6 +3,9 @@ using System.Collections;
 
 public static class Utilities
 {
+	public static string BG_SOUND_MANAGER_TAG = "BgSound";
+	public static string EFF_SOUND_MANAGER_TAG = "EffSound";
+
 	public static string LVL_REACHED_TAG = "levelReached";
 
 	public static string SHOW_TUT_TAG = "showTut";

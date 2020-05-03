@@ -16,6 +16,8 @@ public class UI : MonoBehaviour {
 	public Text scoreText;
     public Text coinsText;
     public Text livesText;
+	private Slider boostTimeSlider;
+	public Text boostTimeText;
 
 	[Header("Display Notifications")]
 	public Text alertText;
@@ -28,6 +30,7 @@ public class UI : MonoBehaviour {
         string currentSceneName = SceneManager.GetActiveScene().name;
         int currentLvl = int.Parse(currentSceneName.Substring(3));
         lvlText.text = "Level " + currentLvl;
+		boostTimeSlider = GetComponentInChildren<Slider>();
         alertText.GetComponent<CanvasRenderer>().SetAlpha(0);
 	}
 
@@ -38,7 +41,21 @@ public class UI : MonoBehaviour {
 	}
 
 
-	// This func will be called from GameMaster
+	public void SetMaxBoostTime(float _maxBoostTime)
+	{
+		this.boostTimeSlider.maxValue = _maxBoostTime;
+	}
+
+
+	public void OnBoostTimeRemainingChange(float _boostTimeRemaining)
+	{
+		float value = Mathf.Clamp(_boostTimeRemaining, 0f, boostTimeSlider.maxValue);
+
+		this.boostTimeSlider.value = value;
+		this.boostTimeText.text = value.ToString("0.00");
+	}
+
+
 	public void UpdateScore(float _score)
 	{
 		scoreText.text = _score.ToString();
@@ -47,7 +64,6 @@ public class UI : MonoBehaviour {
 	}
 
 
-    // This func will be called from GameMaster
     public void UpdateCoins(int currentCoins)
     {
         coinsText.text = currentCoins + "/" + this.coinsCount;
@@ -115,6 +131,8 @@ public class UI : MonoBehaviour {
 		scoreText.text = "0";
 		coinsText.text = "0/" + coinsCount.ToString();
         livesText.text = "3";
+		boostTimeSlider.value = boostTimeSlider.maxValue;
+		this.OnBoostTimeRemainingChange(boostTimeSlider.maxValue);
         alertText.canvasRenderer.SetAlpha(0);
     }
 }
