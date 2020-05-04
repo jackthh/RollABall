@@ -7,9 +7,10 @@ public class Page2 : MonoBehaviour
 {
 
 	[Header("Refs")]
-	public GameMaster gameMaster;
+	private GameMaster gameMaster;
 	public Text subBonusText;
 	private Animator animator;
+	public Button playBtn;
 
 	[Header("Spin parameters")]
 	public Transform rotor;
@@ -38,6 +39,8 @@ public class Page2 : MonoBehaviour
 
 	private void Start()
 	{
+		playBtn.interactable = false;
+		gameMaster = GameObject.FindGameObjectWithTag(Utilities.GAME_MASTER_TAG).GetComponent<GameMaster>();
 		animator = GetComponent<Animator>();
 	}
 
@@ -112,6 +115,8 @@ public class Page2 : MonoBehaviour
 				subBonusText.text = "x " + results[resultIndex];
 				gameMaster.SetBoostMult(results[resultIndex]);
 				animator.SetTrigger("WheelGotResult");
+				playBtn.interactable = true;
+				Debug.Log("Play Btn Interactable = " + playBtn.IsInteractable());
 				Debug.Log("Duration = " + (Time.realtimeSinceStartup - startToEndTime));
 			}
 

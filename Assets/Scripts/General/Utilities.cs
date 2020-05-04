@@ -5,6 +5,7 @@ public static class Utilities
 {
 	public static string BG_SOUND_MANAGER_TAG = "BgSound";
 	public static string EFF_SOUND_MANAGER_TAG = "EffSound";
+	public static string GAME_MASTER_TAG = "GameMaster";
 
 	public static string LVL_REACHED_TAG = "levelReached";
 

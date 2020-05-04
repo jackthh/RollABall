@@ -5,8 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class UI : MonoBehaviour {
+
 	[Header("References")]
-	public GameObject gameMasterContainer;
 	private GameMaster gameMaster;
 
 	[Header("Stats Update")]
@@ -16,8 +16,10 @@ public class UI : MonoBehaviour {
 	public Text scoreText;
     public Text coinsText;
     public Text livesText;
-	private Slider boostTimeSlider;
-	public Text boostTimeText;
+
+	private BoostTimer boostTimer;
+	private StartDialog startDialog;
+	private HUD HUD;
 
 	[Header("Display Notifications")]
 	public Text alertText;
@@ -25,12 +27,14 @@ public class UI : MonoBehaviour {
 
     private void Start()
     {
-		gameMaster = gameMasterContainer.GetComponent<GameMaster>();
+		gameMaster = GameObject.FindGameObjectWithTag(Utilities.GAME_MASTER_TAG).GetComponent<GameMaster>();
+		boostTimer = GetComponentInChildren<BoostTimer>();
+		startDialog = GetComponentInChildren<StartDialog>();
+		HUD = GetComponentInChildren<HUD>();
 
         string currentSceneName = SceneManager.GetActiveScene().name;
         int currentLvl = int.Parse(currentSceneName.Substring(3));
         lvlText.text = "Level " + currentLvl;
-		boostTimeSlider = GetComponentInChildren<Slider>();
         alertText.GetComponent<CanvasRenderer>().SetAlpha(0);
 	}
 
@@ -41,20 +45,28 @@ public class UI : MonoBehaviour {
 	}
 
 
+	public void StopPage1Sound()
+	{
+		startDialog.StopSound();
+	}
+
+
 	public void SetMaxBoostTime(float _maxBoostTime)
 	{
-		this.boostTimeSlider.maxValue = _maxBoostTime;
+		boostTimer.SetMaxBoostTime(_maxBoostTime);
 	}
 
 
 	public void OnBoostTimeRemainingChange(float _boostTimeRemaining)
 	{
-		float value = Mathf.Clamp(_boostTimeRemaining, 0f, boostTimeSlider.maxValue);
-
-		this.boostTimeSlider.value = value;
-		this.boostTimeText.text = value.ToString("0.00");
+		boostTimer.OnBoostTimeRemainingChange(_boostTimeRemaining);
 	}
 
+
+	public void OnBoostMultChange(float _multValue)
+	{
+		boostTimer.SetBoostMult(_multValue);
+	}
 
 	public void UpdateScore(float _score)
 	{
@@ -80,9 +92,17 @@ public class UI : MonoBehaviour {
     }
 
 
-    public void OnEndGame(bool winning)
+	public void OnGameStart()
+	{
+		boostTimer.OnGameStart();
+		HUD.OnGameStart();
+	}
+
+
+    public void OnGameEnd(bool winning)
     {
         CanvasRenderer renderer = alertText.GetComponent<CanvasRenderer>();
+		renderer.gameObject.SetActive(true);
         renderer.SetAlpha(1);
         if (winning)
         {
@@ -95,6 +115,9 @@ public class UI : MonoBehaviour {
             StartCoroutine(Flicker(renderer, 1.2f, 0.2f,true, true));
         }
         renderer.SetAlpha(0);
+
+		boostTimer.OnTimeOver();
+		HUD.OnGameEnd();
     }
 
 
@@ -131,8 +154,8 @@ public class UI : MonoBehaviour {
 		scoreText.text = "0";
 		coinsText.text = "0/" + coinsCount.ToString();
         livesText.text = "3";
-		boostTimeSlider.value = boostTimeSlider.maxValue;
-		this.OnBoostTimeRemainingChange(boostTimeSlider.maxValue);
+
+		boostTimer.OnReset();
         alertText.canvasRenderer.SetAlpha(0);
     }
 }

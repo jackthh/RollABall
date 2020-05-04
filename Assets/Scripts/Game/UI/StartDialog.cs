@@ -5,7 +5,6 @@ using UnityEngine;
 public class StartDialog : MonoBehaviour
 {
 	[Header("Refs")]
-	public GameObject gameMasterContainer;
 	private GameMaster gameMaster;
 	public GameObject videoPlayer1Container;
 	public GameObject videoPlayer2Container;
@@ -14,17 +13,23 @@ public class StartDialog : MonoBehaviour
 
     void Start()
     {
-		gameMaster = gameMasterContainer.GetComponent<GameMaster>();
-		animator = GetComponent<Animator>();        
+		gameMaster = GameObject.FindGameObjectWithTag(Utilities.GAME_MASTER_TAG).GetComponent<GameMaster>();
+		animator = this.GetComponent<Animator>();        
     }
 
 	
 	public void OnPage1Next()
 	{
 		animator.SetTrigger("Page1Next");
+		StopSound();
+		gameMaster.OnPage1NextClick();
+	}
+
+
+	public void StopSound()
+	{
 		videoPlayer1Container.GetComponentInChildren<UnityEngine.Video.VideoPlayer>().Stop();
 		videoPlayer2Container.GetComponentInChildren<UnityEngine.Video.VideoPlayer>().Stop();
-		gameMaster.OnPage1NextClick();
 	}
 
 

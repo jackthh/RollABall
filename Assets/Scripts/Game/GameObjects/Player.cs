@@ -9,7 +9,6 @@ public class Player : MonoBehaviour
 {
 
 	[Header("References")]
-	public GameObject gameMasterContainer;
 	private GameMaster gameMaster;
 
 	[Header("Parameters for movement")]
@@ -27,7 +26,7 @@ public class Player : MonoBehaviour
 
 	void Start()
 	{
-		gameMaster = gameMasterContainer.GetComponent<GameMaster>();
+		gameMaster = GameObject.FindGameObjectWithTag(Utilities.GAME_MASTER_TAG).GetComponent<GameMaster>();
 		rb = this.GetComponent<Rigidbody>();
 	}
 

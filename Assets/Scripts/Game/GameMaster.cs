@@ -64,6 +64,7 @@ public class GameMaster : MonoBehaviour
 	{
 		this.wheelResult = _boostMult;
 		this.boostMult = _boostMult;
+		uIController.OnBoostMultChange(_boostMult);
 	}
 
 
@@ -82,6 +83,7 @@ public class GameMaster : MonoBehaviour
 		diamondsController = diamondsContainer.GetComponent<DiamondsController>();
 
 		transitionController = transitionContainer.GetComponent<SceneTransition>();
+
 		bgSoundManager = GameObject.FindGameObjectWithTag(Utilities.BG_SOUND_MANAGER_TAG).GetComponent<BgSound>();
 		effSoundManager = GameObject.FindGameObjectWithTag(Utilities.EFF_SOUND_MANAGER_TAG).GetComponent<SoundEffect>();
 
@@ -115,14 +117,15 @@ public class GameMaster : MonoBehaviour
 	IEnumerator ShowStartDialog()
 	{
 		yield return new WaitForSecondsRealtime(transitionController.GetTransitionTime());
-		bgSoundManager.Pause();
 
 		if (PlayerPrefs.GetInt(Utilities.SHOW_TUT_TAG, 1) == 1)
 		{
+			bgSoundManager.Pause();
 			startDialogAnimator.SetTrigger("Start_ShowTut");
 		}
 		else
 		{
+			uIController.StopPage1Sound();
 			startDialogAnimator.SetTrigger("Start_NotShowTut");
 		}
 	}
@@ -133,6 +136,7 @@ public class GameMaster : MonoBehaviour
 		isBoosting = true;
 		scoreTime = 0f;
 		PauseGame(false);
+		uIController.OnGameStart();
 	}
 
 
@@ -150,6 +154,8 @@ public class GameMaster : MonoBehaviour
 
 	public void OnMainMenuClick()
 	{
+		Debug.Log("Main Menu CLICKED");
+		bgSoundManager.UnPause();
 		StartCoroutine(LoadLvl(0));
 	}
 
@@ -210,7 +216,7 @@ public class GameMaster : MonoBehaviour
 		{
 			PauseGame(true);
 			effSoundManager.PlayEndGameEffect(true);
-			uIController.OnEndGame(true);
+			uIController.OnGameEnd(true);
 		}
 
 		if (isBoosting)
@@ -230,7 +236,7 @@ public class GameMaster : MonoBehaviour
 			effSoundManager.PlayEndGameEffect(false);
 			currentDeaths++;
 			PauseGame(true);
-			uIController.OnEndGame(false);
+			uIController.OnGameEnd(false);
 		}
 	}
 
@@ -288,6 +294,8 @@ public class GameMaster : MonoBehaviour
 		uIController.OnReset();
 		playerController.OnReset();
 		diamondsController.OnReset();
+
+		PauseGame(false);
 	}
 
 

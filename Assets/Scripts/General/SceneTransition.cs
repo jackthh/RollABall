@@ -5,7 +5,7 @@ using UnityEngine;
 public class SceneTransition : MonoBehaviour
 {
 
-	private float transitionTime = 2.2f;
+	private float transitionTime = 2f;
 	private Animator animator;
 
 

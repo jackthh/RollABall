@@ -67,6 +67,8 @@
     <Compile Include="Assets\Scripts\Game\GameObjects\DiamondsController.cs" />
     <Compile Include="Assets\Scripts\Game\GameObjects\MovingEnemies.cs" />
     <Compile Include="Assets\Scripts\Game\GameObjects\Player.cs" />
+    <Compile Include="Assets\Scripts\Game\UI\BoostTimer.cs" />
+    <Compile Include="Assets\Scripts\Game\UI\HUD.cs" />
     <Compile Include="Assets\Scripts\Game\UI\Page2.cs" />
     <Compile Include="Assets\Scripts\Game\UI\StartDialog.cs" />
     <Compile Include="Assets\Scripts\Game\UI\UI.cs" />
