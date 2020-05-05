@@ -23,6 +23,10 @@ public class CameraController : MonoBehaviour
 	public Vector3 tempPos;
 	private Vector3 gizmosPos;
 
+	private Vector2 startPos;
+	private Vector2 direction;
+	private bool directionUp = true;
+
 
 	private void OnDrawGizmos()
 	{
@@ -54,22 +58,54 @@ public class CameraController : MonoBehaviour
 		//cameraAnchor.Translate((player.position - transform.position).normalized * movingSpeed * Time.deltaTime, Space.World);
 		cameraAnchor.position = player.position;
 
-		// Check input to move camenra
-		if (Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.K))
+		if (Input.touchCount > 0)
 		{
-			if (Input.GetKeyDown(KeyCode.J))
-			{
-				lerpIndex += 0.01f;
-			}
-			else
-			{
-				lerpIndex -= 0.01f;
-			}
+			Touch touch = Input.GetTouch(0);
 
-			lerpIndex = Mathf.Clamp01(lerpIndex);
+			switch (touch.phase)
+			{
+				case TouchPhase.Began:
+					{
+						startPos = touch.position;
+						break;
+					}
+
+				case TouchPhase.Moved:
+					{
+						direction = touch.position - startPos;
+						if (direction.y > 0)
+						{
+							directionUp = true;
+						}
+						if (direction.y < 0)
+						{
+							directionUp = false;
+						}
+						break;
+					}
+
+				case TouchPhase.Ended:
+					{
+						MoveCameraAngle(directionUp);
+						break;
+					}
+			}
 		}
+	}
 
-			tempPos = CubicCurve(routePoints, lerpIndex);
+
+	private void MoveCameraAngle(bool moveUp)
+	{
+		if (moveUp)
+		{
+			lerpIndex += 0.01f;
+		}
+		else
+		{
+			lerpIndex -= 0.01f;
+		}
+		lerpIndex = Mathf.Clamp01(lerpIndex);
+		tempPos = CubicCurve(routePoints, lerpIndex);
 	}
 
 

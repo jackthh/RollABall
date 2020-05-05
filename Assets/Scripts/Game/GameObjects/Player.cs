@@ -44,9 +44,13 @@ public class Player : MonoBehaviour
 		}
 		else
 		{
-			if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && IsGrounded())
+			if (Input.touchCount > 0)
 			{
-				doJump = true;
+				// Only jumpable if the joystick is stationary
+				if (Input.GetTouch(1).phase == TouchPhase.Began && IsGrounded())
+				{
+					doJump = true;
+				}
 			}
 
 			if (joystick.Vertical != 0)

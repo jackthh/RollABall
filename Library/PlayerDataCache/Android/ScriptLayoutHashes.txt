@@ -9,6 +9,7 @@ Assets/Scenes/Lvl3.unity
 Assets/Scenes/Lvl4.unity
 Assets/Scenes/Lvl5.unity
 SceneListEnd?
+ce669872a2be11bc686ea22961d8a3bb Assembly-CSharp.dll:.Joystick
 05d434522598544d8a9ebec0f69ee020 Assembly-CSharp.dll:.MainMenu
 71bb6a6b6c8f052f948db64c7dd3ca4f UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset
 06f0fef534ca4c1d6064fd77a26bf722 UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationTrack
@@ -87,6 +88,8 @@ aa165095bcf0f4d99594ea33df01c81b UnityEngine.UI.dll:UnityEngine.UI.Slider
 0fd6822f6177297bd0eb4d83cc7a9030 UnityEngine.UI.dll:UnityEngine.UI.ToggleGroup
 abf1930d8126d0b2e00e9449129a0190 UnityEngine.UI.dll:UnityEngine.EventSystems.TouchInputModule
 64e54c0cbb0177c5ea26f340efb9ff85 UnityEngine.UI.dll:UnityEngine.UI.VerticalLayoutGroup
+9e27f44bbf48228f203a37254d40f8ae Assembly-CSharp.dll:.JoystickSetterExample
+71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp.dll:.JoystickController
 71bb6a6b6c8f052f948db64c7dd3ca4f UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset
 06f0fef534ca4c1d6064fd77a26bf722 UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationTrack
 780e8f682b3221346c034a6712a0fd25 UnityEngine.Timeline.dll:UnityEngine.Timeline.AnimationPlayableAsset
@@ -119,6 +122,7 @@ d251bf88db6c95a6b1aa0b69298da9ef UnityEngine.SpatialTracking.dll:UnityEngine.Spa
 303ad70ce203ad874efe2965d0fbcff9 Unity.Analytics.Tracker.dll:UnityEngine.Analytics.AnalyticsEventTracker
 7fb9de8dcf73854b6b328eca1f7a6e6d Unity.Analytics.Tracker.dll:UnityEngine.Analytics.AnalyticsTracker
 71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp.dll:.BgSound
+ce669872a2be11bc686ea22961d8a3bb Assembly-CSharp.dll:.FloatingJoystick
 d2e20b2b8023d277048bd02da8f37e64 Assembly-CSharp.dll:.MainMenuPlayer
 71bb6a6b6c8f052f948db64c7dd3ca4f Unity.Analytics.Editor.dll:UnityEditor.Analytics.AnalyticsEventTrackerEditor
 6f89aa276328ac0727197a2c9ab681c5 Assembly-CSharp.dll:.HUD
@@ -140,12 +144,14 @@ ad9173d3a69d99153f38ed4b62226129 UnityEngine.Networking.dll:UnityEngine.Networki
 b538a2d9997b913789e6837174cf9730 Assembly-CSharp.dll:.CameraController
 97af3bb0032243d346b367d495710458 Assembly-CSharp.dll:.MovingEnemies
 416a5f49c7c40759dafacfe46a7d0722 Assembly-CSharp.dll:.StartDialog
+824e8d4cb47ffd88ddf959dbd4526585 Assembly-CSharp.dll:.DynamicJoystick
 88cc9df3c6fc697bfbeacd24c0d6f2d7 UnityEngine.TestRunner.dll:UnityEngine.TestTools.BeforeAfterTestCommandState
 88cc9df3c6fc697bfbeacd24c0d6f2d7 UnityEngine.TestRunner.dll:UnityEngine.TestTools.EnumerableSetUpTearDownCommandState
 71bb6a6b6c8f052f948db64c7dd3ca4f UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.Callbacks.PlayModeRunnerCallback
 7a25fcb81bf8eb2f157d591103c1dd7b UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.PlaymodeTestsController
 71bb6a6b6c8f052f948db64c7dd3ca4f UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.Callbacks.RemoteTestResultSender
 71bb6a6b6c8f052f948db64c7dd3ca4f UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.Callbacks.TestResultRendererCallback
+ce669872a2be11bc686ea22961d8a3bb Assembly-CSharp.dll:.FixedJoystick
 931f489e44eadf809e9310429c99dde5 UnityEngine.GoogleAudioSpatializer.dll:UnityEngine.Experimental.Audio.Google.GvrAudioListenerExtension
 fb6a1ea36b4f6ef5948d283d93760765 UnityEngine.GoogleAudioSpatializer.dll:UnityEngine.Experimental.Audio.Google.GvrAudioRoom
 5b0391b7e3d9ea9db6c0a8fbd0ca23f6 UnityEngine.GoogleAudioSpatializer.dll:UnityEngine.Experimental.Audio.Google.GvrAudioSoundfieldExtension
@@ -157,18 +163,12 @@ fb6a1ea36b4f6ef5948d283d93760765 UnityEngine.GoogleAudioSpatializer.dll:UnityEng
 02785afd1f39a7dda819fbc09d3f3ad8 Assembly-CSharp.dll:.UI
 490eba91b0c5b244962a6335ba178f4c Assembly-CSharp.dll:.Player
 507174d46dacbc5fe45e28485db5dd1e Unity.Analytics.DataPrivacy.dll:UnityEngine.Analytics.DataPrivacyButton
+528e9858840cb8370d93939fff6b42d9 Assembly-CSharp.dll:.JoystickPlayerExample
 d251bf88db6c95a6b1aa0b69298da9ef UnityEngine.SpatialTracking.dll:UnityEngine.SpatialTracking.TrackedPoseDriver
 da24127000c80fe185c01995e2da051a Assembly-CSharp.dll:.SoundEffect
 f3e2c4bfb0aa55e89383143f298838dd Assembly-CSharp.dll:.LvlSelectionMenu
 97eab01bd0498dddab33ca1f29c20542 Assembly-CSharp.dll:.BoostTimer
 b4dc05c731d519a51df926481d43a58f Assembly-CSharp.dll:.StatsMenu
+9dac16f3efc511835ac976dfae55f580 Assembly-CSharp.dll:.VariableJoystick
 ef37cd870c2198822191badb87bd4208 Assembly-CSharp.dll:.GameMaster
 71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp.dll:.SceneTransition
-ce669872a2be11bc686ea22961d8a3bb Assembly-CSharp.dll:.Joystick
-9e27f44bbf48228f203a37254d40f8ae Assembly-CSharp.dll:.JoystickSetterExample
-ce669872a2be11bc686ea22961d8a3bb Assembly-CSharp.dll:.FloatingJoystick
-824e8d4cb47ffd88ddf959dbd4526585 Assembly-CSharp.dll:.DynamicJoystick
-ce669872a2be11bc686ea22961d8a3bb Assembly-CSharp.dll:.FixedJoystick
-528e9858840cb8370d93939fff6b42d9 Assembly-CSharp.dll:.JoystickPlayerExample
-9dac16f3efc511835ac976dfae55f580 Assembly-CSharp.dll:.VariableJoystick
-71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp.dll:.JoystickController
