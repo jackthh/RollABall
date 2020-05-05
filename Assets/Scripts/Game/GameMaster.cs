@@ -205,11 +205,11 @@ public class GameMaster : MonoBehaviour
 
 		diamondsController.OnTouchPlayer(_collider);
 
-		int score = CalculateScore();
-		currentScore += score;
+		int recentScore = CalculateScore();
+		currentScore += recentScore;
 		currentCoins++;
 
-		uIController.UpdateScore(this.currentScore);
+		uIController.UpdateScore(this.currentScore, recentScore);
 		uIController.UpdateCoins(this.currentCoins);
 
 		if (this.currentCoins == this.totalCoinsCount)
@@ -222,6 +222,7 @@ public class GameMaster : MonoBehaviour
 		if (isBoosting)
 		{
 			SetBoostTimeRemaining(boostTimeRemaining + boostTimeBonus);
+			uIController.OnBoostTimeBonus();
 		}
 	}
 

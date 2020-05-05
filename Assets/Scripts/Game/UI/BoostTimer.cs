@@ -39,6 +39,12 @@ public class BoostTimer : MonoBehaviour
 	}
 
 
+	public void OnTimeBonus()
+	{
+		animator.SetTrigger("BonusTime");
+	}
+
+
 	public void SetBoostMult(float _boostMult)
 	{
 		this.boostMultText.text = "x " + _boostMult.ToString();
@@ -53,6 +59,11 @@ public class BoostTimer : MonoBehaviour
 
 	public void OnTimeOver()
 	{
+		if (animator.GetCurrentAnimatorStateInfo(0).IsName("BoostTimer_End"))
+		{
+			return;
+		}
+
 		animator.SetTrigger("TimeOver");
 	}
 

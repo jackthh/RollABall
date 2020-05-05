@@ -63,16 +63,24 @@ public class UI : MonoBehaviour {
 	}
 
 
+	public void OnBoostTimeBonus()
+	{
+		boostTimer.OnTimeBonus();
+	}
+
+
 	public void OnBoostMultChange(float _multValue)
 	{
 		boostTimer.SetBoostMult(_multValue);
 	}
 
-	public void UpdateScore(float _score)
+	public void UpdateScore(float _score, float recentScore)
 	{
 		scoreText.text = _score.ToString();
 		CanvasRenderer canvasRenderer = scoreText.GetComponent<CanvasRenderer>();
 		StartCoroutine(Flicker(canvasRenderer, 1.2f, 0.2f, false, false));
+
+		HUD.OnGetScore(recentScore);
 	}
 
 
