@@ -92,16 +92,15 @@ public class GameMaster : MonoBehaviour
 			movingEnemiesController = movingEnemiesContainer.GetComponent<MovingEnemies>();
 		}
 
-		lvlReached = PlayerPrefs.GetInt("lvlReached", 1);
-		totalRecordedScore = PlayerPrefs.GetInt("totalScore", 0);
-		totalRecordedCoins = PlayerPrefs.GetInt("totalCoins", 0);
-		totalRecordedTime = PlayerPrefs.GetFloat("totalTime", 0f);
-		totalRecordedDeaths = PlayerPrefs.GetInt("totalDeaths", 0);
+		lvlReached = PlayerPrefs.GetInt(Utilities.LVL_REACHED_TAG, 1);
+		totalRecordedScore = PlayerPrefs.GetInt(Utilities.TOTAL_SCORE_TAG, 0);
+		totalRecordedCoins = PlayerPrefs.GetInt(Utilities.TOTAL_COINS_TAG, 0);
+		totalRecordedTime = PlayerPrefs.GetFloat(Utilities.TOTAL_TIME_TAG, 0f);
+		totalRecordedDeaths = PlayerPrefs.GetInt(Utilities.TOTAL_DEATHS_TAG, 0);
 
 		// Init coins value
 		totalCoinsCount = diamondsController.TotalCoinsCount();
 		uIController.SetCoinsCount(totalCoinsCount);
-		Debug.Log("master takes coins count = " + totalCoinsCount);
 
 		uIController.SetMaxBoostTime(this.maxBoostTime);
 

@@ -20,6 +20,7 @@ public class UI : MonoBehaviour {
 	private BoostTimer boostTimer;
 	private StartDialog startDialog;
 	private HUD HUD;
+	private JoystickController joystickController;
 
 	[Header("Display Notifications")]
 	public Text alertText;
@@ -31,6 +32,7 @@ public class UI : MonoBehaviour {
 		boostTimer = GetComponentInChildren<BoostTimer>();
 		startDialog = GetComponentInChildren<StartDialog>();
 		HUD = GetComponentInChildren<HUD>();
+		joystickController = GetComponentInChildren<JoystickController>();
 
         string currentSceneName = SceneManager.GetActiveScene().name;
         int currentLvl = int.Parse(currentSceneName.Substring(3));
@@ -104,6 +106,7 @@ public class UI : MonoBehaviour {
 	{
 		boostTimer.OnGameStart();
 		HUD.OnGameStart();
+		joystickController.OnGameStart();
 	}
 
 
@@ -126,6 +129,7 @@ public class UI : MonoBehaviour {
 
 		boostTimer.OnTimeOver();
 		HUD.OnGameEnd();
+		joystickController.OnGameEnd();
     }
 
 

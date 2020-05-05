@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
 
 	[Header("References")]
 	private GameMaster gameMaster;
+	private Joystick joystick;
 
 	[Header("Parameters for movement")]
 	private Rigidbody rb;
@@ -19,6 +20,9 @@ public class Player : MonoBehaviour
 	public float horizontalSpeed;
 	public float jumpForceMagnitude;
 
+	private float verticalInput;
+	private float horizontalInput;
+
 	[Header("Player status and stats")]
 	private int health = 3;
 	private bool isPaused = false;
@@ -27,6 +31,7 @@ public class Player : MonoBehaviour
 	void Start()
 	{
 		gameMaster = GameObject.FindGameObjectWithTag(Utilities.GAME_MASTER_TAG).GetComponent<GameMaster>();
+		joystick = GameObject.FindGameObjectWithTag(Utilities.JOYSTICK_TAG).GetComponent<Joystick>();
 		rb = this.GetComponent<Rigidbody>();
 	}
 
@@ -39,9 +44,27 @@ public class Player : MonoBehaviour
 		}
 		else
 		{
-			if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
+			if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && IsGrounded())
 			{
 				doJump = true;
+			}
+
+			if (joystick.Vertical != 0)
+			{
+				this.verticalInput = joystick.Vertical;
+			}
+			else
+			{
+				this.verticalInput = 0;
+			}
+
+			if (joystick.Horizontal != 0)
+			{
+				this.horizontalInput = joystick.Horizontal;
+			}
+			else
+			{
+				this.horizontalInput = 0;
 			}
 		}
 	}
@@ -56,9 +79,6 @@ public class Player : MonoBehaviour
 		}
 		else
 		{
-			float verticalInput = Input.GetAxis("Vertical");
-			float horizontalInput = Input.GetAxis("Horizontal");
-
 			if (jumpable && doJump)
 			{
 				Jump();
