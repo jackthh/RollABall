@@ -4959,6 +4959,7 @@ GameObject:
   - component: {fileID: 1300706145090630838}
   - component: {fileID: 1300706145090630837}
   - component: {fileID: 1300706145090630836}
+  - component: {fileID: 698316838698945139}
   m_Layer: 5
   m_Name: AlertText
   m_TagString: Untagged
@@ -5027,6 +5028,21 @@ MonoBehaviour:
   m_Text: 'YOU LOSE!
 
     RELAX, TRY HARDER!'
+--- !u!114 &698316838698945139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1300706145090630835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.3018868, g: 0.28907084, b: 0.28907084, a: 0.5}
+  m_EffectDistance: {x: 2, y: -2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &2500250997751826815
 GameObject:
   m_ObjectHideFlags: 0
@@ -5555,15 +5571,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
---- !u!224 &2929252284071855450 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 2929252283123773938, guid: aaa2c939c0359ac4dbce3f49e8b90252,
-    type: 3}
-  m_PrefabInstance: {fileID: 948106408}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2929252284071855451 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2929252283123773939, guid: aaa2c939c0359ac4dbce3f49e8b90252,
+    type: 3}
+  m_PrefabInstance: {fileID: 948106408}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &2929252284071855450 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2929252283123773938, guid: aaa2c939c0359ac4dbce3f49e8b90252,
     type: 3}
   m_PrefabInstance: {fileID: 948106408}
   m_PrefabAsset: {fileID: 0}

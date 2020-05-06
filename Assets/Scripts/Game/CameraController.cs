@@ -91,6 +91,8 @@ public class CameraController : MonoBehaviour
 					}
 			}
 		}
+
+		tempPos = CubicCurve(routePoints, lerpIndex);
 	}
 
 
@@ -105,7 +107,6 @@ public class CameraController : MonoBehaviour
 			lerpIndex -= 0.01f;
 		}
 		lerpIndex = Mathf.Clamp01(lerpIndex);
-		tempPos = CubicCurve(routePoints, lerpIndex);
 	}
 
 
